@@ -25,7 +25,7 @@
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input class="form-control" type="password" required="" id="password"
-                        placeholder="Enter your password">
+                        placeholder="Enter your password" name="password">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="nama_bidang">Nama Bidang</label>

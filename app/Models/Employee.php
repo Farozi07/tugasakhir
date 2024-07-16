@@ -12,9 +12,6 @@ class Employee extends Model
     use SoftDeletes;
     protected $guarded = [] ;
 
-    protected $fillable = [
-        'user_id', 'nama_bidang', 'penanggung_jawab'
-    ];
 
     public function user()
     {

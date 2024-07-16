@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Guest extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     protected $guarded = [] ;
 
     protected $fillable = [

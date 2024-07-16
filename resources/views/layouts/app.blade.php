@@ -261,10 +261,11 @@
                         <div class="dropdown-divider"></div>
 
                         <!-- item-->
-                        <form id="keluar" action="" method="POST">
+                        <form id="keluar" action="{{ route('logout') }}" method="POST">
                             @csrf
                         </form>
-                        <a href="" onclick="event.preventDefault();document.getElementById('keluar').submit();"
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();document.getElementById('keluar').submit();"
                             class="dropdown-item notify-item">
                             <i class="fe-log-out"></i>
                             <span>Logout</span>

@@ -14,6 +14,12 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $findRole = Role::where('name','admin')->first();
+        User::create([
+            'role_id' => $findRole->id,
+            'name' => 'admin',
+            'email' => 'BPSDM23@gmail.com',
+            'password' => bcrypt('bpsdm23'),
+        ]);
     }
 }

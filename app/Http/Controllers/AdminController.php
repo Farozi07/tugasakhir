@@ -28,7 +28,16 @@ class AdminController extends Controller
         // ]);
 
         $role = Role::where('name','employee')->first();
-        // return $role;
+        // $user = new User;
+        // $user->role_id = $role->id;
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password = bcrypt($request->password);
+        // $user->save();
+
+        // $employee = new Employee;
+        // $employee->no_ktp = $request->no_ktp;
+        // $employee->telp = $request->telp;
 
         $user = User::create([
             'name' => $request->name,
@@ -39,23 +48,9 @@ class AdminController extends Controller
 
         Employee::create([
             'user_id'=>$user->id,
-            'nama_bidang'=>$request->input('nama_bidang'),
-            'penanggung_jawab'=>$request->input('penanggung_jawab'),
+            'nama_bidang'=>$request->nama_bidang,
+            'penanggung_jawab'=>$request->penanggung_jawab,
         ]);
-        // $user =new User([
-            // 'name' => $request->no_ktp,
-            // 'email' => $request->nama,
-            // 'password' => Hash::make($request->password),
-            // 'role_id'=>$role->id,
-        // ]);
-        // $user->save();
-        // $employee=new Employee([
-            // 'user_id'=>$user->id,
-            // 'nama_bidang'=>$request->input('nama_bidang'),
-            // 'penanggung_jawab'=>$request->input('penanggung_jawab'),
-        // ]);
-        // $employee->save();
-
 
         return redirect()->route('admin.create.user')->with('success', 'User created successfully.');
     }
