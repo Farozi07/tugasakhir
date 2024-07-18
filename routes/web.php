@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IndexController;
 use App\Models\Aula;
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,10 @@ Route::get('/home', function(){
 });
 
 Route::prefix('admin')->middleware(['auth','role:admin'])->group(function(){
-    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.dashboard');
-    Route::get('/create',[AdminController::class,'createUser'])->name('admin.create.user');
-    Route::post('/store',[AdminController::class,'storeUser'])->name('admin.store.user');
+    Route::get('/dashboard', [AdminController::class,'index'])->name('admin.dashboard');
+    // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.dashboard');
+    Route::get('/create',[AdminController::class,'createEmployee'])->name('admin.create.employee');
+    Route::post('/store',[AdminController::class,'storeEmployee'])->name('admin.store.employee');
 
 });
 Route::prefix('employee')->middleware(['auth','role:employee'])->group(function(){
@@ -36,9 +38,8 @@ Route::prefix('employee')->middleware(['auth','role:employee'])->group(function(
 Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('guest.dashboard');
 });
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', [IndexController::class, 'index'])->name('index');
 
 
 //Admin

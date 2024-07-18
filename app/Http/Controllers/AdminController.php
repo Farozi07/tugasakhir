@@ -13,31 +13,23 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    public function dashboard(){
-        return view ('layouts.app');
+    public function index(){
+        return view ('admin.dashboard');
     }
-    public function createUser(){
+    public function createEmployee(){
         $role=Role::all();
-        return view ('admin.create_user',['role'=>$role]);
+        return view ('admin.create_employee',['role'=>$role]);
     }
-    public function storeUser(Request $request){
+    public function storeEmployee(Request $request){
         // $request->validate([
         //     'name' => 'required|string|max:255',
         //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|min:8|confirmed',
+        //     'password' => 'required|string|confirmed',
+        //     'nama_bidang'=>'required|string|max:255',
+        //     'penanggung_jawab'=>'required|string|max:255',
         // ]);
 
         $role = Role::where('name','employee')->first();
-        // $user = new User;
-        // $user->role_id = $role->id;
-        // $user->name = $request->name;
-        // $user->email = $request->email;
-        // $user->password = bcrypt($request->password);
-        // $user->save();
-
-        // $employee = new Employee;
-        // $employee->no_ktp = $request->no_ktp;
-        // $employee->telp = $request->telp;
 
         $user = User::create([
             'name' => $request->name,
@@ -52,6 +44,6 @@ class AdminController extends Controller
             'penanggung_jawab'=>$request->penanggung_jawab,
         ]);
 
-        return redirect()->route('admin.create.user')->with('success', 'User created successfully.');
+        return redirect()->route('admin.create.employee')->with('success', 'User created successfully.');
     }
 }

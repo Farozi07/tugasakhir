@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Tambah User')
-@section('pagetitle', 'Tambah User')
+@section('title', 'Tambah Pegawai')
+@section('pagetitle', 'Tambah Pegawai')
 @section('content')
     <div class="row">
         <div class="col-md-6 col-xl-6 mx-auto">
-            <form action="{{ route('admin.store.user') }}" method="POST">
+            <form action="{{ route('admin.store.employee') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label class="form-label" for="name">Name</label>
