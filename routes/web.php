@@ -27,9 +27,19 @@ Route::get('/home', function(){
 
 Route::prefix('admin')->middleware(['auth','role:admin'])->group(function(){
     Route::get('/dashboard', [AdminController::class,'index'])->name('admin.dashboard');
-    // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('admin.dashboard');
-    Route::get('/create',[AdminController::class,'createEmployee'])->name('admin.create.employee');
-    Route::post('/store',[AdminController::class,'storeEmployee'])->name('admin.store.employee');
+
+    Route::get('/create/guest',[AdminController::class,'createGuest'])->name('admin.create.guest');
+    Route::post('/store/guest',[AdminController::class,'storeGuest'])->name('admin.store.guest');
+
+    Route::get('/create/booking/guest',[AdminController::class,'createBookingGuest'])->name('admin.create.booking.guest');
+    Route::post('/store/booking/guest',[AdminController::class,'storeBookingGuest'])->name('admin.store.booking.guest');
+
+    Route::get('/create/employee',[AdminController::class,'createEmployee'])->name('admin.create.employee');
+    Route::post('/store/employee',[AdminController::class,'storeEmployee'])->name('admin.store.employee');
+
+    Route::get('/create/booking/employee',[AdminController::class,'createBookingEmployee'])->name('admin.create.booking.employee');
+    Route::post('/store/booking/employee',[AdminController::class,'storeBookingEmployee'])->name('admin.store.booking.employee');
+
 
 });
 Route::prefix('employee')->middleware(['auth','role:employee'])->group(function(){

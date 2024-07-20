@@ -5,6 +5,8 @@ use App\Models\Aula;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\Guest;
+use App\Models\Booking;
 use Hash;
 
 
@@ -16,19 +18,55 @@ class AdminController extends Controller
     public function index(){
         return view ('admin.dashboard');
     }
+
+    public function createGuest(){
+        return view ('admin.create_guest');
+    }
+    public function storeGuest(Request $request){
+        $role = Role::where('name','guest')->first();
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role_id' => $role->id,
+        ]);
+
+        Guest::create([
+            'user_id'=>$user->id,
+            'no_ktp'=>$request->no_ktp,
+            'telp'=>$request->telp,
+            'alamat'=>$request->alamat,
+        ]);
+
+        return redirect()->route('admin.create.guest')->with('success', 'Guest created successfully.');
+    }
+    public function createBookingGuest(){
+        $aula =Aula::all();
+        $data =User::whereHas('guest')->get();
+        return view ('admin.create_booking_guest',['data'=>$data],['aula'=>$aula]);
+    }
+    public function storeBookingGuest(Request $request){
+        $booking=Booking::create([
+            'user_id'=>$request->name,
+            'aula_id' => $request->aula,
+            'start' => $request->start,
+            'end' => $request->end,
+            'keperluan' => $request->keperluan,
+            'status' => true,
+        ]);
+        return redirect()->route('admin.create.booking.guest')->with('success', 'Kegiatan Berhasil Ditambahkan.');
+    }
+
+    public function createBookingEmployee(){
+        $aula =Aula::all();
+        return view('admin.create_booking_employee',['aula'=>$aula]);
+    }
     public function createEmployee(){
         $role=Role::all();
         return view ('admin.create_employee',['role'=>$role]);
     }
     public function storeEmployee(Request $request){
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|confirmed',
-        //     'nama_bidang'=>'required|string|max:255',
-        //     'penanggung_jawab'=>'required|string|max:255',
-        // ]);
-
         $role = Role::where('name','employee')->first();
 
         $user = User::create([
@@ -44,6 +82,6 @@ class AdminController extends Controller
             'penanggung_jawab'=>$request->penanggung_jawab,
         ]);
 
-        return redirect()->route('admin.create.employee')->with('success', 'User created successfully.');
+        return redirect()->route('admin.create.employee')->with('success', 'Employee created successfully.');
     }
 }
