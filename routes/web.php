@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\GuestController;
 use App\Models\Aula;
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,8 @@ Route::get('/home', function(){
 
 Route::prefix('admin')->middleware(['auth','role:admin'])->group(function(){
     Route::get('/dashboard', [AdminController::class,'index'])->name('admin.dashboard');
+    Route::get('/list',[AdminController::class,'list'])->name('admin.list');
+
 
     Route::get('/create/guest',[AdminController::class,'createGuest'])->name('admin.create.guest');
     Route::post('/store/guest',[AdminController::class,'storeGuest'])->name('admin.store.guest');
@@ -46,7 +50,9 @@ Route::prefix('employee')->middleware(['auth','role:employee'])->group(function(
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('employee.dashboard');
 });
 Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
-    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('guest.dashboard');
+    Route::get('/dashboard', [GuestController::class,'index'])->name('guest.dashboard');
+    Route::get('/create', [GuestController::class,'createBooking'])->name('guest.create.booking');
+    Route::post('/store',[GuestController::class,'storeBooking'])->name('guest.store.booking');
 });
 
 Route::get('/', [IndexController::class, 'index'])->name('index');

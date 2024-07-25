@@ -390,7 +390,7 @@
                 </div>
             </footer>
             <!-- end Footer -->
-            <div class="col-md-10 col-xl-10 mx-auto" id='calendar'></div>
+            <div class="col-md-11 col-xl-11 mx-auto" id='calendar'></div>
         </div>
 
     </div>
@@ -563,6 +563,7 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 themeSystem: 'bootstrap',
+                events: @json($events),
                 displayEventTime: false,
             });
             calendar.render();

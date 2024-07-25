@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('aula_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->dateTime('start');
-            $table->dateTime('end');
+            $table->date('start');
+            $table->date('end');
             $table->string('keperluan');
             $table->boolean('status');
             $table->timestamps();

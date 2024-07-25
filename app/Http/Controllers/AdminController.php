@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\Guest;
 use App\Models\Booking;
 use Hash;
+use Carbon\Carbon;
 
 
 use Illuminate\Http\Request;
@@ -15,8 +16,24 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-    public function index(){
-        return view ('admin.dashboard');
+    public function index(Request $request){
+        $events=[];
+        $datas=Booking::with(['aula'])->where('status',true)->get();
+
+        foreach ($datas as $data) {
+            $events[]=[
+                'title'=>$data->aula->nama,
+                'start'=>$data->start,
+                'end'=>Carbon::parse($data->end)->addDay(),
+            ];
+        }
+        return view('admin.dashboard', compact('events'));
+    }
+
+    public function list(){
+        $data=Booking::where('status',true)->get();
+        return view ('admin.list_booking',compact('data'));
+        // return $data;
     }
 
     public function createGuest(){
