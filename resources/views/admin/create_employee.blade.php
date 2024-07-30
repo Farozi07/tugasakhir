@@ -7,7 +7,7 @@
             <form action="{{ route('admin.store.employee') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                    <label class="form-label" for="name">Name</label>
+                    <label class="form-label" for="name">Nama</label>
                     <input type="text" id="name" name="name" value="{{ old('name') }}"
                         class="form-control @error('name') is-invalid @enderror">
                     @error('name')

@@ -7,30 +7,29 @@
             <form action="{{ route('admin.store.booking.guest') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                    <label for="data" class="form-label">Pilih Pemesan:</label>
-                    <select class="form-select" id="data" name="name" required>
-                        <option value="" selected disabled>Pilih Pemesan</option>
+                    <label class="form-label">Pilih Pemesan</label> <br />
+                    <select id="selectize-select2" name="name" required>
+                        <option selected disabled>Pilih Pemesan</option>
                         @foreach ($data as $a)
                             <option value="{{ $a->id }}">{{ $a->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="aula" class="form-label">Pilih Aula:</label>
-                    <select class="form-select" id="aula" name="aula" required>
-                        <option value="" selected disabled>Pilih Aula</option>
-                        @foreach ($aula as $a)
-                            <option value="{{ $a->id }}">{{ $a->nama }}</option>
+                    <label class="form-label">Pilih Aula</label> <br />
+                    <select id="selectize-select" name="aula" required>
+                        @foreach ($aula as $b)
+                            <option value="{{ $b->id }}">{{ $b->nama }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="start" class="form-label" id="start">Tanggal Mulai:</label>
-                    <input type="date" class="form-control" id="start" name="start" required>
+                    <label class="form-label">Start</label>
+                    <input type="text" id="start-humanfd-datepicker" class="form-control" placeholder="" name="start">
                 </div>
                 <div class="mb-3">
-                    <label for="end" class="form-label" id="end">Tanggal Selesai:</label>
-                    <input type="date" class="form-control" id="end" name="end" required>
+                    <label class="form-label">End</label>
+                    <input type="text" id="end-humanfd-datepicker" class="form-control" placeholder="" name="end">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="keperluan">Keperluan</label>

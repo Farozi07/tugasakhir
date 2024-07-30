@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('booking_id')->constrained()->onDelete('cascade');
-            $table->dateTime('payment_date');
-            $table->decimal('amount', 10, 2);
-            $table->string('payment_method');
+            $table->integer('price');
+            $table->enum('status', ['pending', 'success', 'failed']);
+            $table->string('snap_token')->nullable();
             $table->timestamps();
+
         });
     }
 

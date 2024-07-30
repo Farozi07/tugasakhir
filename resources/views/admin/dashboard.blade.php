@@ -367,9 +367,15 @@
             <div class="content">
                 <!-- Start Content-->
                 <div class="container-fluid">
+                    <div class="card">
+                        <br><br>
+                        <div class="col-md-11 col-xl-11 mx-auto" id='calendar'></div>
+
+                    </div>
                     @yield('content')
                 </div> <!-- container -->
             </div> <!-- content -->
+
             <!-- Footer Start -->
             <footer class="footer">
                 <div class="container-fluid">
@@ -390,7 +396,32 @@
                 </div>
             </footer>
             <!-- end Footer -->
-            <div class="col-md-11 col-xl-11 mx-auto" id='calendar'></div>
+
+            <!-- Standard modal content -->
+            <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog"
+                aria-labelledby="standard-modalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="standard-modalLabel">Detail Booking</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p><strong>Title:</strong> <span id="modalTitle"></span></p>
+                            <p><strong>Mulai:</strong> <span id="modalStart"></span></p>
+                            <p><strong>Berakhir:</strong> <span id="modalEnd"></span></p>
+                            <p><strong>Keperluan:</strong> <span id="modalKeperluan"></span></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+
         </div>
 
     </div>
@@ -557,14 +588,54 @@
     </footer>
 
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+
     <script>
+        function formatDate(date) {
+            var d = new Date(date);
+            var day = ('0' + d.getDate()).slice(-2);
+            var month = ('0' + (d.getMonth() + 1)).slice(-2);
+            var year = d.getFullYear();
+            return `${day}-${month}-${year}`;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
+                themeSystem: "bootstrap",
+                bootstrapFontAwesome: !1,
+                buttonText: {
+                    today: "Today",
+                    month: "Month",
+                    prev: "Prev",
+                    next: "Next",
+                },
+                headerToolbar: {
+                    left: "prev,next today",
+                    center: "title",
+                    right: "",
+                },
                 initialView: 'dayGridMonth',
-                themeSystem: 'bootstrap',
                 events: @json($events),
                 displayEventTime: false,
+                selectable: true,
+                editable: true, // Enable editing events
+                eventClick: function(info) {
+                    // Ambil data event
+                    var eventObj = info.event;
+                    // Format tanggal
+                    var formattedStart = formatDate(eventObj.start);
+                    var formattedEnd = formatDate(eventObj.end);
+
+                    // Isi modal dengan data event
+                    document.getElementById('modalTitle').textContent = eventObj.title;
+                    document.getElementById('modalStart').textContent = formattedStart;
+                    document.getElementById('modalEnd').textContent = formattedEnd;
+                    document.getElementById('modalKeperluan').textContent = eventObj.extendedProps
+                        .keperluan;
+
+                    // Tampilkan modal
+                    $('#standard-modal').modal('show');
+                }
             });
             calendar.render();
         });

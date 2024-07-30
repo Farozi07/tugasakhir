@@ -8,25 +8,35 @@ use App\Models\Booking;
 
 class EventController extends Controller
 {
-        public function index()
+    public function index()
     {
-        return view('admin.events');
+        $data=Booking::select([
+            'id',
+            'keperluan as title',
+            'start',
+            'end',
+        ])->where('status',true)->get();
+        // $data=response()->json(Booking::all());
+        // return response()->json($data);
+        // return $data;
+        return view('admin.events',['data'=>$data]);
+    }
+    public function store(Request $request)
+    {
+        $booking = Booking::create($request->all());
+        return response()->json($booking);
     }
 
-    public function listEvent(Request $request)
+    public function update(Request $request, $id)
     {
-        $start = date('Y-m-d', strtotime($request->start));
-        $end = date('Y-m-d', strtotime($request->end));
+        $booking = Booking::findOrFail($id);
+        $booking->update($request->all());
+        return response()->json($booking);
+    }
 
-        $events = Booking::where('start', '>=', $start)
-        ->where('end', '<=' , $end)->get()
-        ->map( fn ($item) => [
-            'id' => $item->id,
-            'title' => $item->title,
-            'start' => $item->start,
-            'end' => date('Y-m-d',strtotime($item->end. '+1 days')),
-        ]);
-
-        return response()->json($events);
+    public function destroy($id)
+    {
+        Booking::destroy($id);
+        return response()->json(['message' => 'Booking deleted successfully']);
     }
 }

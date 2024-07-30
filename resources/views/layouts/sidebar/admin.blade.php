@@ -7,6 +7,20 @@
         </a>
     </li>
     <li>
+        <a href="{{ route('admin.list.booking.guest') }}">
+            <i class="fe-user-plus"></i>
+            {{-- <span class="badge bg-success rounded-pill float-end">9+</span> --}}
+            <span> List Booking Pemesan </span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('admin.list.booking.employee') }}">
+            <i class="fe-user-plus"></i>
+            {{-- <span class="badge bg-success rounded-pill float-end">9+</span> --}}
+            <span> List Kegiatan </span>
+        </a>
+    </li>
+    <li>
         <a href="{{ route('admin.create.guest') }}">
             <i class="fe-user-plus"></i>
             {{-- <span class="badge bg-success rounded-pill float-end">9+</span> --}}

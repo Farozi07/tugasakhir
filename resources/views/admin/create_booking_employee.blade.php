@@ -4,49 +4,24 @@
 @section('content')
     <div class="row">
         <div class="col-md-4 col-xl-8 mx-auto mt-4">
-            <form action="" method="post">
+            <form action="{{ route('admin.store.booking.employee') }}" method="post">
                 @csrf
                 <div class="mb-3">
-                    <label class="form-label">Nama Bidang</label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="nama_bidang" id="bidang1" value="Bidang 1"
-                            required>
-                        <label class="form-check-label" for="bidang1">
-                            Bidang UMPAR
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="nama_bidang" id="bidang2" value="Bidang 2"
-                            required>
-                        <label class="form-check-label" for="bidang2">
-                            Bidang SKPK
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="nama_bidang" id="bidang3" value="Bidang 3"
-                            required>
-                        <label class="form-check-label" for="bidang3">
-                            Bidang PKT
-                        </label>
-                    </div>
-                    <!-- Tambahkan opsi lain sesuai kebutuhan -->
+                    <label for="data" class="form-label">Pilih Pegawai:</label>
+                    <select class="form-select" id="data" name="name" required>
+                        <option value="" selected disabled>Pilih Pemesan</option>
+                        @foreach ($data as $b)
+                            <option value="{{ $b->id }}">{{ $b->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="penanggung_jawab">Penanggung Jawab</label>
-                    <input type="text" id="penanggung_jawab" name="penanggung_jawab"
-                        value="{{ old('penanggung_jawab') }}"
-                        class="form-control @error('penanggung_jawab') is-invalid @enderror">
-                    @error('penanggung_jawab')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <label class="form-label">Start</label>
+                    <input type="text" id="start-humanfd-datepicker" class="form-control" placeholder="" name="start">
                 </div>
                 <div class="mb-3">
-                    <label for="start" class="form-label" id="start">Tanggal Mulai:</label>
-                    <input type="date" class="form-control" id="start" name="start" required>
-                </div>
-                <div class="mb-3">
-                    <label for="end" class="form-label" id="start">Tanggal Selesai:</label>
-                    <input type="date" class="form-control" id="end" name="end" required>
+                    <label class="form-label">End</label>
+                    <input type="text" id="end-humanfd-datepicker" class="form-control" placeholder="" name="end">
                 </div>
                 <div class="mb-3">
                     <label for="aula" class="form-label">Pilih Aula:</label>

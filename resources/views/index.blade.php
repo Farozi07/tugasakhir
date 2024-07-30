@@ -2,191 +2,329 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+
+    <meta charset="utf-8" />
+    <title>Pemesanan Aula BPSDM Prov.Kalbar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('/') }}/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/favicon.ico">
 
     <!-- App css -->
 
-    <link href="{{ asset('/') }}/assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="{{ asset('/') }}assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="{{ asset('/') }}assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
 
     <!-- icons -->
-    <link href="{{ asset('/') }}/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/') }}assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
-    <!-- Sweet Alert-->
-    <link href="{{ asset('/') }}assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+</head>
 
-    <!-- Plugin css -->
-    <link href="{{ asset('/') }}/assets/libs/fullcalendar/main.min.css" rel="stylesheet" type="text/css" />
+<body class="loading" data-layout-mode="horizontal" data-layout-color="light" data-layout-size="fluid"
+    data-topbar-color="dark" data-leftbar-position="fixed">
 
-    <!-- third party css -->
-    <link href="{{ asset('/') }}assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css"
-        rel="stylesheet" type="text/css" />
-    <link href="{{ asset('/') }}assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css"
-        rel="stylesheet" type="text/css" />
-    <link href="{{ asset('/') }}assets/libs/datatables.net-select-bs5/css//select.bootstrap5.min.css"
-        rel="stylesheet" type="text/css" />
-    <!-- third party css end -->
+    <!-- Begin page -->
+    <div id="wrapper">
+        <!-- Topbar Start -->
+        <div class="navbar-custom">
+            <div class="container-fluid">
+                <ul class="list-unstyled topnav-menu float-end mb-0">
+                    <li class="dropdown notification-list">
+                        @guest
+                            <a href="{{ route('login') }}" class="nav-link right-bar-toggle waves-effect waves-light">
+                                <i class="btn btn-primary">LOGIN</i>
+                            </a>
+                        @endguest
+                        @auth
+                            <a href="{{ url('/home') }}" class="nav-link right-bar-toggle waves-effect waves-light">
+                                <i class="btn btn-primary">LOGIN</i>
+                            @endauth
+                    </li>
+                </ul>
 
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <!-- Logo di sebelah kiri -->
-        <a class="navbar-brand ms-2" href="">
-            <img src="https://bpsdm.kalbarprov.go.id/wp-content/uploads/2022/11/Group-13.png" alt="Logo"
-                height="30">
-            Penyewaan Aula
-        </a>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
-                    <a class="nav-link" href="/">Beranda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="">Informasi</a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Tombol Login di sebelah kanan -->
-        <ul class="navbar-nav ml-auto me-2">
-            <li class="nav-item">
-                @guest
-                    <a class="nav-link btn btn-primary text-white" style="" href="{{ route('login') }}">Login</a>
-                @endguest
-                @auth
-                    <a class="nav-link btn btn-primary text-white" style="" href="{{ url('/home') }}">Login</a>
-                @endauth
-            </li>
-        </ul>
-    </nav>
-
-
-    <div class="row mt-5">
-        <div class="col-md-6 col-xl-6">
-            <h2 style="text-align: center">Gambar</h2>
-            <hr>
-            <div id="carouselExampleSlidesOnly" class="carousel slide ms-2  " data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="{{ asset('/') }}/assets/images/gallery/1.jpg" class="d-block w-100"
-                            alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('/') }}/assets/images/gallery/2.jpg" class="d-block w-100"
-                            alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('/') }}/assets/images/gallery/3.jpg" class="d-block w-100"
-                            alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('/') }}/assets/images/gallery/4.jpg" class="d-block w-100"
-                            alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{{ asset('/') }}/assets/images/gallery/5.jpg" class="d-block w-100"
-                            alt="...">
-                    </div>
+                <!-- LOGO -->
+                <div class="logo-box">
+                    <a href="index.html" class="logo logo-light text-center">
+                        <span class="logo-sm">
+                            <img src="assets/images/logo-sm.png" alt="" height="22">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="assets/images/logo-light.png" alt="" height="16">
+                        </span>
+                    </a>
+                    <a href="index.html" class="logo logo-dark text-center">
+                        <span class="logo-sm">
+                            <img src="assets/images/logo-sm.png" alt="" height="22">
+                        </span>
+                        <span class="logo-lg">
+                            <img src="assets/images/logo-dark.png" alt="" height="16">
+                        </span>
+                    </a>
                 </div>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
+
+                    <li>
+                        <!-- Mobile menu toggle (Horizontal Layout)-->
+                        <a class="navbar-toggle nav-link" data-bs-toggle="collapse"
+                            data-bs-target="#topnav-menu-content">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                        <!-- End mobile menu toggle-->
+                    </li>
+
+                </ul>
+
+                <div class="clearfix"></div>
+
             </div>
-        </div>
-        <div class="col-md-6 col-xl-6">
-            <div id='calendar'></div>
-        </div>
-    </div>
 
-    <div id="modal-action" class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
+        </div>
+        <!-- end Topbar -->
+
+        <div class="topnav">
+            <div class="container-fluid">
+                <nav class="navbar navbar-light navbar-expand-lg topnav-menu">
+
+                    <div class="collapse navbar-collapse" id="topnav-menu-content">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link arrow-none" href="index.html" id="topnav-dashboard" role="button"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="mdi mdi-view-dashboard me-1"></i> Dashboard
+                                </a>
+
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link arrow-none" href="#" id="topnav-components" role="button"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class="mdi mdi-lifebuoy me-1"></i> Informasi
+                                </a>
+                            </li>
+                        </ul> <!-- end navbar-->
+                    </div> <!-- end .collapsed-->
+                </nav>
+            </div> <!-- end container-fluid -->
+        </div> <!-- end topnav-->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title">Jadwal Pemesanan Aula</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+
+                        <div class="col-xl-6 col-md-6">
+                            <div class="card">
+                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                            class="active"></li>
+                                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                                    </ol>
+                                    <div class="carousel-inner" role="listbox">
+                                        <div class="carousel-item active">
+                                            <img class="d-block img-fluid"
+                                                src="{{ asset('/') }}assets/images/small/img-3.jpg"
+                                                alt="First slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block img-fluid"
+                                                src="{{ asset('/') }}assets/images/small/img-2.jpg"
+                                                alt="Second slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block img-fluid"
+                                                src="{{ asset('/') }}assets/images/small/img-1.jpg"
+                                                alt="Third slide">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                        data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                        data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!-- end col -->
+
+                        <div class="col-xl-6 col-md-6">
+
+                            <div id="calendar"></div>
+                        </div><!-- end col -->
+
+                        <!-- end row -->
+                        <!-- Standard modal content -->
+                        <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog"
+                            aria-labelledby="standard-modalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="standard-modalLabel">Detail Booking</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>Title:</strong> <span id="modalTitle"></span></p>
+                                        <p><strong>Mulai:</strong> <span id="modalStart"></span></p>
+                                        <p><strong>Berakhir:</strong> <span id="modalEnd"></span></p>
+                                        <p><strong>Keperluan:</strong> <span id="modalKeperluan"></span></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div>
+                        <!-- /.modal -->
+
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script> &copy; Adminto theme by <a href="">Coderthemes</a>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end footer-links d-none d-sm-block">
+                                    <a href="javascript:void(0);">About Us</a>
+                                    <a href="javascript:void(0);">Help</a>
+                                    <a href="javascript:void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+                <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+
+                <script>
+                    function formatDate(date) {
+                        var d = new Date(date);
+                        var day = ('0' + d.getDate()).slice(-2);
+                        var month = ('0' + (d.getMonth() + 1)).slice(-2);
+                        var year = d.getFullYear();
+                        return `${day}-${month}-${year}`;
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var calendarEl = document.getElementById('calendar');
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                            themeSystem: "bootstrap",
+                            bootstrapFontAwesome: !1,
+                            buttonText: {
+                                today: "Today",
+                                month: "Month",
+                                prev: "Prev",
+                                next: "Next",
+                            },
+                            headerToolbar: {
+                                left: "prev,next today",
+                                center: "title",
+                                right: "",
+                            },
+                            initialView: 'dayGridMonth',
+                            events: @json($events),
+                            displayEventTime: false,
+                            selectable: true,
+                            editable: true, // Enable editing events
+                            eventClick: function(info) {
+                                // Ambil data event
+                                var eventObj = info.event;
+                                // Format tanggal
+                                var formattedStart = formatDate(eventObj.start);
+                                var formattedEnd = formatDate(eventObj.end);
+
+                                // Isi modal dengan data event
+                                document.getElementById('modalTitle').textContent = eventObj.title;
+                                document.getElementById('modalStart').textContent = formattedStart;
+                                document.getElementById('modalEnd').textContent = formattedEnd;
+                                document.getElementById('modalKeperluan').textContent = eventObj.extendedProps
+                                    .keperluan;
+
+                                // Tampilkan modal
+                                $('#standard-modal').modal('show');
+                            }
+                        });
+                        calendar.render();
+                    });
+                </script>
             </div>
+
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
         </div>
-    </div>
+        <!-- END wrapper -->
 
-    <footer class="mt-4 text-center bg-light py-3">
-        <div class="container">
-            &copy; {{ date('Y') }} BPSDM Provinsi Kalimantan Barat. All rights reserved.
-        </div>
-    </footer>
+        <!-- Vendor -->
+        <script src="{{ asset('/') }}assets/libs/jquery/jquery.min.js"></script>
+        <script src="{{ asset('/') }}assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ asset('/') }}assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="{{ asset('/') }}assets/libs/node-waves/waves.min.js"></script>
+        <script src="{{ asset('/') }}assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+        <script src="{{ asset('/') }}assets/libs/jquery.counterup/jquery.counterup.min.js"></script>
+        <script src="{{ asset('/') }}assets/libs/feather-icons/feather.min.js"></script>
 
+        <!-- plugin js -->
+        <script src="{{ asset('/') }}assets/libs/moment/min/moment.min.js"></script>
+        <script src="{{ asset('/') }}assets/libs/fullcalendar/main.min.js"></script>
 
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                themeSystem: 'bootstrap',
-                displayEventTime: false,
-            });
-            calendar.render();
-        });
-    </script>
+        <!-- Calendar init -->
+        <script src="{{ asset('/') }}assets/js/pages/calendar.init.js"></script>
 
-    <!-- Optional JavaScript -->
+        <!-- knob plugin -->
+        <script src="{{ asset('/') }}assets/libs/jquery-knob/jquery.knob.min.js"></script>
 
-    <!-- Vendor -->
-    <script src="{{ asset('/') }}/assets/libs/jquery/jquery.min.js"></script>
-    <script src="{{ asset('/') }}/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('/') }}/assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="{{ asset('/') }}/assets/libs/node-waves/waves.min.js"></script>
-    <script src="{{ asset('/') }}/assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
-    <script src="{{ asset('/') }}/assets/libs/jquery.counterup/jquery.counterup.min.js"></script>
-    <script src="{{ asset('/') }}/assets/libs/feather-icons/feather.min.js"></script>
+        <!--Morris Chart-->
+        <script src="{{ asset('/') }}assets/libs/morris.js06/morris.min.js"></script>
+        <script src="{{ asset('/') }}assets/libs/raphael/raphael.min.js"></script>
 
-    <!-- Sweet Alerts js -->
-    <script src="{{ asset('/') }}assets/libs/sweetalert2/sweetalert2.all.min.js"></script>
+        <!-- Dashboar init js-->
+        <script src="{{ asset('/') }}assets/js/pages/dashboard.init.js"></script>
 
-    <!-- Sweet alert init js-->
-    <script src="{{ asset('/') }}assets/js/pages/sweet-alerts.init.js"></script>
+        <!-- App js-->
+        <script src="{{ asset('/') }}assets/js/app.min.js"></script>
 
-    <!-- plugin js -->
-    <script src="{{ asset('/') }}/assets/libs/moment/min/moment.min.js"></script>
-    <script src="{{ asset('/') }}/assets/libs/fullcalendar/main.min.js"></script>
-
-    <!-- Calendar init -->
-    <script src="{{ asset('/') }}/assets/js/pages/calendar.init.js"></script>
-
-    <!-- third party js -->
-    <script src="{{ asset('/') }}assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/pdfmake/build/pdfmake.min.js"></script>
-    <script src="{{ asset('/') }}assets/libs/pdfmake/build/vfs_fonts.js"></script>
-    <!-- third party js ends -->
-
-    <!-- Datatables init -->
-    <script src="{{ asset('/') }}assets/js/pages/datatables.init.js"></script>
-
-    <!-- App js -->
-    <script src="{{ asset('/') }}/assets/js/app.min.js"></script>
 </body>
 
 </html>

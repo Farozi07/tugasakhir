@@ -16,12 +16,12 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="start" class="form-label" id="start">Tanggal Mulai:</label>
-                    <input type="date" class="form-control" id="start" name="start" required>
+                    <label class="form-label">Start</label>
+                    <input type="text" id="start-humanfd-datepicker" class="form-control" placeholder="" name="start">
                 </div>
                 <div class="mb-3">
-                    <label for="end" class="form-label" id="end">Tanggal Selesai:</label>
-                    <input type="date" class="form-control" id="end" name="end" required>
+                    <label class="form-label">End</label>
+                    <input type="text" id="end-humanfd-datepicker" class="form-control" placeholder="" name="end">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="keperluan">Keperluan</label>

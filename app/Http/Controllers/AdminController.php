@@ -9,6 +9,7 @@ use App\Models\Guest;
 use App\Models\Booking;
 use Hash;
 use Carbon\Carbon;
+use Auth;
 
 
 use Illuminate\Http\Request;
@@ -17,23 +18,47 @@ use Illuminate\Support\Facades\Validator;
 class AdminController extends Controller
 {
     public function index(Request $request){
-        $events=[];
-        $datas=Booking::with(['aula'])->where('status',true)->get();
-
-        foreach ($datas as $data) {
-            $events[]=[
-                'title'=>$data->aula->nama,
-                'start'=>$data->start,
-                'end'=>Carbon::parse($data->end)->addDay(),
-            ];
-        }
-        return view('admin.dashboard', compact('events'));
+        $events = Booking::with('aula')
+            ->where('status',true)
+            ->where('start', '>=', Carbon::today())
+            ->select('id', 'start', 'end', 'keperluan', 'aula_id')
+            ->get()
+            ->map(function ($booking) {
+                return [
+                    'id'=> $booking->id,
+                    'title' => $booking->aula->nama,
+                    'start' => $booking->start,
+                    'end' => Carbon::parse($booking->end),
+                    'keperluan'=>$booking->keperluan,
+                    'className'=>['bg-'. $booking->aula->category]
+                ];
+            });
+            // return $events;
+        return view('admin.dashboard',['events'=>$events]);
     }
 
-    public function list(){
-        $data=Booking::where('status',true)->get();
-        return view ('admin.list_booking',compact('data'));
+    public function listBookingGuest(){
+        $data=Booking::where('status',true)
+        ->with(['user' => function($g){
+            $g->with('guest');
+        }])
+        ->whereHas('user',function($u){
+            $u->whereHas('guest');
+        })
+        ->get();
         // return $data;
+        return view ('admin.list_booking_guest',['data'=>$data]);
+    }
+
+    public function listBookingEmployee(){
+        $data=Booking::with(['user' => function($g){
+            $g->with('employee');
+        }])
+        ->whereHas('user',function($u){
+            $u->whereHas('employee');
+        })
+        ->get();
+        return view ('admin.list_booking_employee',['data'=>$data]);
     }
 
     public function createGuest(){
@@ -58,6 +83,26 @@ class AdminController extends Controller
 
         return redirect()->route('admin.create.guest')->with('success', 'Guest created successfully.');
     }
+    public function createEmployee(){
+        $role=Role::all();
+        return view ('admin.create_employee',['role'=>$role]);
+    }
+    public function storeEmployee(Request $request){
+        $role = Role::where('name','employee')->first();
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role_id' => $role->id,
+        ]);
+
+        Employee::create([
+            'user_id'=>$user->id,
+            'nama_bidang'=>$request->nama_bidang,
+            'penanggung_jawab'=>$request->penanggung_jawab,
+        ]);
+        return redirect()->route('admin.create.employee')->with('success', 'Employee created successfully.');
+    }
     public function createBookingGuest(){
         $aula =Aula::all();
         $data =User::whereHas('guest')->get();
@@ -74,31 +119,22 @@ class AdminController extends Controller
         ]);
         return redirect()->route('admin.create.booking.guest')->with('success', 'Kegiatan Berhasil Ditambahkan.');
     }
-
     public function createBookingEmployee(){
+        $data =User::whereHas('employee')->get();
         $aula =Aula::all();
-        return view('admin.create_booking_employee',['aula'=>$aula]);
+        // return $data;
+        return view ('admin.create_booking_employee',['data'=>$data],['aula'=>$aula]);
+
     }
-    public function createEmployee(){
-        $role=Role::all();
-        return view ('admin.create_employee',['role'=>$role]);
-    }
-    public function storeEmployee(Request $request){
-        $role = Role::where('name','employee')->first();
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role_id' => $role->id,
+    public function storeBookingEmployee(Request $request){
+        Booking::create([
+            'user_id'=>$request->name,
+            'aula_id' => $request->aula,
+            'start' => $request->start,
+            'end' => $request->end,
+            'keperluan' => $request->keperluan,
+            'status' => true,
         ]);
-
-        Employee::create([
-            'user_id'=>$user->id,
-            'nama_bidang'=>$request->nama_bidang,
-            'penanggung_jawab'=>$request->penanggung_jawab,
-        ]);
-
-        return redirect()->route('admin.create.employee')->with('success', 'Employee created successfully.');
+        return redirect()->route('admin.create.booking.employee')->with('success', 'Kegiatan Berhasil di Tambahkan.');
     }
 }
