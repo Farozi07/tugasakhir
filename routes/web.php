@@ -73,6 +73,7 @@ Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
     Route::get('/fill-data', [GuestController::class, 'fillData'])->name('guest.fillData');
     Route::post('/save-data', [GuestController::class, 'saveData'])->name('guest.saveData');
 
+    Route::post('/send-notification', 'NotificationController@send');
     Route::get('/create', [GuestController::class,'createBooking'])->name('guest.create.booking');
     Route::post('/store',[GuestController::class,'storeBooking'])->name('guest.store.booking');
 
@@ -80,10 +81,6 @@ Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
     Route::get('/list/checkout/{id}',[CheckoutController::class,'listshow'])->name('guest.checkout.id');
     Route::post('/checkout/{id}', [CheckoutController::class, 'process'])->name('guest.checkout-process');
     Route::get('/checkout/success/{bookings}', [CheckoutController::class, 'success'])->name('guest.transaction.success');
-
-
-    Route::get('/product/{id}', [GuestController::class, 'show'])->name('guest.product');
-    Route::get('/transactions', [TransactionController::class, 'index'])->name('guest.transactions');
 });
 
 Route::get('/', [IndexController::class, 'index'])->name('index');

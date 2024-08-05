@@ -2,6 +2,11 @@
 @section('title', 'Daftar Booking')
 @section('pagetitle', 'Daftar Booking')
 @section('content')
+    @if (session('message'))
+        <div class="alert alert-warning">
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="row">
         <div class="col-12">
             <table id="responsive-datatable" class="table table-striped">

@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\NotificationController;
 
 use Illuminate\Http\Request;
 
@@ -95,16 +96,16 @@ class GuestController extends Controller
 
         return redirect()->route('guest.dashboard')->with('success', 'Data profil berhasil diperbarui.');
     }
-
-    public function show($id)
-    {
-        $products = Booking::all();
-
-        $product = collect($products)->firstWhere('id', $id);
-        // return $product;
-        return view('guest.product', compact('product'));
-    }
     public function createBooking(){
+        $user = Auth::user();
+        // Cek apakah user memiliki booking yang belum dibayar
+        $pendingBooking = Booking::where('user_id', $user->id)
+                                  ->where('status', false)
+                                  ->first();
+        if ($pendingBooking) {
+            // Redirect ke halaman pembayaran jika ada booking yang belum dibayar
+            return redirect()->route('guest.list.booking')->with('error', 'Anda memiliki pesanan yang belum dibayar. Silakan melakukan pembayaran terlebih dahulu.');
+        }
         $aula =Aula::all();
         return view('guest.tambahpesanan',['aula'=>$aula]);
     }
@@ -179,6 +180,21 @@ class GuestController extends Controller
 
         $transaction->snap_token=$snapToken;
         $transaction->save();
-        return redirect()->route('guest.create.booking')->with('success', 'Kegiatan Berhasil di Request.');
+
+        $start = Carbon::parse($booking->start)->translatedFormat('d F Y');
+        $end = Carbon::parse($booking->end)->translatedFormat('d F Y');
+        $totalCostFormatted = 'Rp ' . number_format($totalCost, 0, ',', '.');
+        $message = "Terdapat Permintaan Penyewaan Aula\n" .
+                   "Nama: {$booking->user->name}\n".
+                   "Aula yang dipesan : {$booking->aula->nama}\n".
+                   "Selama : $days Hari\n" .
+                   "Dimulai: $start\n".
+                   "Selesai: $end\n".
+                   "Total Pembayaran: $totalCostFormatted";
+        // Kirim notifikasi ke Telegram
+        $notificationController = new NotificationController();
+        $notificationController->send(new Request(['message' => $message]));
+
+        return redirect()->route('guest.list.booking')->with('success', 'Kegiatan Berhasil ditambahkan. Silahkan melakukan pembayaran segera');
     }
 }

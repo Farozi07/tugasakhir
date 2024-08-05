@@ -353,7 +353,8 @@
                         </div>
                     </div>
 
-                    <p class="text-muted left-user-info">BPSDM</p>
+                    {{-- <p class="text-muted left-user-info">BPSDM</p> --}}
+                    <br><br>
                 </div>
 
                 <!--- Sidemenu -->
