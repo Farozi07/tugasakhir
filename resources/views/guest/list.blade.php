@@ -24,8 +24,7 @@
                             <td>{{ $p->end }}</td>
                             <td>{{ $p->status }}</td>
                             <td>
-                                <a href="{{ route('guest.checkout.id', ['id' => $p->id]) }}"
-                                    class="btn btn-success">Detail</a>
+                                <a href="{{ route('guest.checkout.id', ['id' => $p->id]) }}" class="btn btn-success">Bayar</a>
                             </td>
                         </tr>
                     @endforeach

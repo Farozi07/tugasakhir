@@ -656,6 +656,18 @@
                 text: '{{ Session::get('success') }}',
                 icon: "success"
             });
+        @elseif (Session::has('error'))
+            Swal.fire({
+                title: "",
+                text: '{{ Session::get('error') }}',
+                icon: "error"
+            });
+        @elseif (Session::has('info'))
+            Swal.fire({
+                title: "",
+                text: '{{ Session::get('info') }}',
+                icon: "info"
+            });
         @endif
     </script>
 

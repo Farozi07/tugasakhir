@@ -30,20 +30,6 @@
         <!-- Topbar Start -->
         <div class="navbar-custom">
             <div class="container-fluid">
-                <ul class="list-unstyled topnav-menu float-end mb-0">
-                    <li class="dropdown notification-list">
-                        @guest
-                            <a href="{{ route('login') }}" class="nav-link right-bar-toggle waves-effect waves-light">
-                                <i class="btn btn-primary">LOGIN</i>
-                            </a>
-                        @endguest
-                        @auth
-                            <a href="{{ url('/home') }}" class="nav-link right-bar-toggle waves-effect waves-light">
-                                <i class="btn btn-primary">LOGIN</i>
-                            @endauth
-                    </li>
-                </ul>
-
                 <!-- LOGO -->
                 <div class="logo-box">
                     <a href="index.html" class="logo logo-light text-center">
@@ -63,6 +49,20 @@
                         </span>
                     </a>
                 </div>
+
+                <ul class="list-unstyled topnav-menu float-end mb-0">
+                    <li class="d-none d-lg-block">
+                        @guest
+                            <a href="{{ route('login') }}" class="nav-link right-bar-toggle waves-effect waves-light">
+                                <i class="btn btn-primary">LOGIN</i>
+                            </a>
+                        @endguest
+                        @auth
+                            <a href="{{ url('/home') }}" class="nav-link right-bar-toggle waves-effect waves-light">
+                                <i class="btn btn-primary">LOGIN</i>
+                            @endauth
+                    </li>
+                </ul>
 
                 <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
 

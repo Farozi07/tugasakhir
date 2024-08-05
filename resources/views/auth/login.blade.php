@@ -66,7 +66,19 @@
                                 <div class="mb-3 d-grid text-center">
                                     <button class="btn btn-primary" type="submit    "> Log In </button>
                                 </div>
+                                <div class="mb-3 d-grid text-center">
+                                    <a href="{{ route('login.provider.google') }}" class="btn btn-danger">
+                                        {{ __('Login with Google') }}
+                                    </a>
+                                </div>
+                                <div class="mb-3 d-grid text-center">
+                                    <a href="{{ route('login.provider.github') }}" class="btn btn-danger">
+                                        {{ __('Login with Github') }}
+                                    </a>
+                                    <!-- Add more providers as needed -->
+                                </div>
                             </form>
+
 
                         </div> <!-- end card-body -->
                     </div>

@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->char('no_ktp', 16)->unique();
-            $table->char('telp', 15);
-            $table->string('alamat');
+            $table->char('no_ktp', 16)->nullable()->unique();
+            $table->char('telp', 15)->nullable();
+            $table->string('alamat')->nullable();
             $table->timestamps();
         });
     }

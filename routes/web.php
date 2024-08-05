@@ -8,6 +8,8 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\Auth\GitHubController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Models\Aula;
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,15 @@ use App\Models\Aula;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('auth/google', [GoogleController::class, 'redirectToProvider'])->name('login.provider.google');
+Route::get('auth/google/callback', [GoogleController::class, 'handleProviderCallback'])->name('login.callback.google');
+
+Route::get('auth/github', [GitHubController::class, 'redirectToProvider'])->name('login.provider.github');
+Route::get('auth/github/callback', [GitHubController::class, 'handleProviderCallback'])->name('login.callback.github');
+
+
+
 Route::get('/home', function(){
     if (Auth::user()->role->name == 'admin') {
         return redirect()->route('admin.dashboard');
@@ -59,13 +70,16 @@ Route::prefix('employee')->middleware(['auth','role:employee'])->group(function(
 });
 Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
     Route::get('/dashboard', [GuestController::class,'index'])->name('guest.dashboard');
+    Route::get('/fill-data', [GuestController::class, 'fillData'])->name('guest.fillData');
+    Route::post('/save-data', [GuestController::class, 'saveData'])->name('guest.saveData');
+
     Route::get('/create', [GuestController::class,'createBooking'])->name('guest.create.booking');
     Route::post('/store',[GuestController::class,'storeBooking'])->name('guest.store.booking');
 
     Route::get('/list',[CheckoutController::class,'list'])->name('guest.list.booking');
     Route::get('/list/checkout/{id}',[CheckoutController::class,'listshow'])->name('guest.checkout.id');
     Route::post('/checkout/{id}', [CheckoutController::class, 'process'])->name('guest.checkout-process');
-    Route::post('/checkout/success/{id}', [CheckoutController::class, 'success'])->name('guest.checkout-success');
+    Route::get('/checkout/success/{bookings}', [CheckoutController::class, 'success'])->name('guest.transaction.success');
 
 
     Route::get('/product/{id}', [GuestController::class, 'show'])->name('guest.product');
@@ -73,40 +87,6 @@ Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
 });
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
-
-
-//Admin
-// Route::get('/dashboard',[AdminController::class,'dashboard'])->name('admin.dashboard');
-
-
-//Route Menambahkan Data Aula
-Route::get('/manual-aula',function(){
-    Aula::create(
-        [
-            'nama' => 'Aula Bhinneka Tunggal Ika',
-            'price'=>'3000000',
-            'deskripsi' => '100 Orang',
-            'category'=>'danger',
-        ]
-    );
-
-    Aula::create(
-        [
-            'nama' => 'Aula Garuda',
-            'price'=>'2000000',
-            'deskripsi' => '100 S.D 150 Orang',
-            'category'=>'warning',
-        ]
-    );
-    Aula::create(
-        [
-            'nama' => 'Aula Akcaya',
-            'price'=>'1000000',
-            'deskripsi' => '40 Orang',
-            'category'=>'success',
-        ]
-    );
-});
 
 Auth::routes();
 
