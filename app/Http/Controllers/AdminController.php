@@ -49,6 +49,34 @@ class AdminController extends Controller
         // return $data;
         return view ('admin.list_booking_guest',['data'=>$data]);
     }
+    public function getCancellationRequests(){
+        $data = Booking::where('cancellation_requested', true)
+        ->with(['user' => function($query) {
+            $query->with('guest');
+        }])
+        ->whereHas('user', function($query) {
+            $query->whereHas('guest');
+        })
+        ->get();
+        // return $data;
+        return view('admin.list_cancellation_requests', ['data' => $data]);
+    }
+
+    public function processCancellation(Request $request, $id){
+        $booking = Booking::findOrFail($id);
+
+        if ($request->action == 'approve') {
+            // Hapus booking jika pembatalan disetujui
+            $booking->delete();
+            return redirect()->back()->with('success', 'Booking telah dibatalkan dan dihapus.');
+        } else {
+            // Tolak permintaan pembatalan
+            $booking->cancellation_requested = false;
+            $booking->cancellation_reason = null;
+            $booking->save();
+        return redirect()->back()->with('success', 'Booking sudah diterima dan dihapus.');
+        }
+    }
 
     public function listBookingEmployee(){
         $data=Booking::with(['user' => function($g){
@@ -84,8 +112,7 @@ class AdminController extends Controller
         return redirect()->route('admin.create.guest')->with('success', 'Guest created successfully.');
     }
     public function createEmployee(){
-        $role=Role::all();
-        return view ('admin.create_employee',['role'=>$role]);
+        return view ('admin.create_employee');
     }
     public function storeEmployee(Request $request){
         $role = Role::where('name','employee')->first();
@@ -122,7 +149,6 @@ class AdminController extends Controller
     public function createBookingEmployee(){
         $data =User::whereHas('employee')->get();
         $aula =Aula::all();
-        // return $data;
         return view ('admin.create_booking_employee',['data'=>$data],['aula'=>$aula]);
 
     }

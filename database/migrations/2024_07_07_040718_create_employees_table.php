@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('nama_bidang', ['renja', 'umpar', 'skpk','pkt','pkmf']);
+            $table->string('nama_bidang');
             $table->string('penanggung_jawab');
             $table->timestamps();
         });

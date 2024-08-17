@@ -19,6 +19,30 @@ class CheckoutController extends Controller
         ->get();
         return view('guest.list',['bookings'=>$bookings]);
     }
+    public function requestCancellation(Request $request, $id){
+        $booking = Booking::findOrFail($id);
+        $booking->cancellation_requested = true;
+        $booking->cancellation_reason = $request->cancellation_reason;
+        $booking->save();
+
+
+            // Prepare message for Telegram
+        $start = Carbon::parse($booking->start)->format('d M Y');
+        $end = Carbon::parse($booking->end)->format('d M Y');
+        $days = Carbon::parse($booking->start)->diffInDays(Carbon::parse($booking->end))+1;
+
+        $message = "Terdapat Permintaan Pembatalan Booking Aula\n" .
+                "Nama: {$booking->user->name}\n" .
+                "Aula yang dipesan: {$booking->aula->nama}\n" .
+                "Selama: $days Hari\n" .
+                "Dimulai: $start\n" .
+                "Selesai: $end\n" .
+                "Alasan Pembatalan: {$booking->cancellation_reason}";
+        // return $message;
+        $notificationController = new NotificationController();
+        $notificationController->send(new Request(['message' => $message]));
+        return redirect()->back()->with('success', 'Permintaan pembatalan telah dikirim ke admin.');
+    }
     public function listshow($id){
         $bookings = Booking::with('transaction')
         ->where('id',$id)->first();

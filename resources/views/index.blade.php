@@ -263,7 +263,7 @@
                             events: @json($events),
                             displayEventTime: false,
                             selectable: true,
-                            editable: true, // Enable editing events
+                            editable: false, // Enable editing events
                             eventClick: function(info) {
                                 // Ambil data event
                                 var eventObj = info.event;

@@ -48,6 +48,12 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->group(function(){
 
 
     Route::get('/list/guest',[AdminController::class,'listBookingGuest'])->name('admin.list.booking.guest');
+    Route::get('/list/cancel',[AdminController::class,'getCancellationRequests'])->name('admin.list.booking.cancel.guest');
+    Route::get('/cancel/pesanan', [AdminController::class, 'getCancellationRequests'])->name('admin.cancellationRequests');
+    Route::post('/cancel/{id}', [AdminController::class, 'processCancellation'])->name('admin.processCancellation');
+
+// BookingController.php
+
     Route::get('/list/employee',[AdminController::class,'listBookingEmployee'])->name('admin.list.booking.employee');
 
 
@@ -78,6 +84,7 @@ Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
     Route::post('/store',[GuestController::class,'storeBooking'])->name('guest.store.booking');
 
     Route::get('/list',[CheckoutController::class,'list'])->name('guest.list.booking');
+    Route::post('/list/request-cancellation/{id}', [CheckoutController::class, 'requestCancellation'])->name('guest.req.cancel');
     Route::get('/list/checkout/{id}',[CheckoutController::class,'listshow'])->name('guest.checkout.id');
     Route::post('/checkout/{id}', [CheckoutController::class, 'process'])->name('guest.checkout-process');
     Route::get('/checkout/success/{bookings}', [CheckoutController::class, 'success'])->name('guest.transaction.success');

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->date('end');
             $table->string('keperluan');
             $table->boolean('status');
+            $table->boolean('cancellation_requested')->default(false);
+            $table->text('cancellation_reason')->nullable();
             $table->timestamps();
         });
     }
