@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Daftar Booking')
-@section('pagetitle', 'Daftar Booking')
+@section('title', 'Daftar Pesanan')
+@section('pagetitle', 'Daftar Pesanan')
 @section('content')
     @if (session('message'))
         <div class="alert alert-warning">
@@ -12,8 +12,8 @@
             <table id="responsive-datatable" class="table table-striped">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Aula</th>
+                        <th>Nama Aula</th>
+                        <th>Keperluan</th>
                         <th>Mulai</th>
                         <th>Berakhir</th>
                         <th>Status</th>
@@ -23,54 +23,55 @@
                 <tbody>
                     @foreach ($bookings as $p)
                         <tr>
-                            <th>{{ $loop->iteration }}</th>
                             <td>{{ $p->aula->nama }}</td>
-                            <td>{{ $p->start }}</td>
-                            <td>{{ $p->end }}</td>
-                            <td>{{ $p->status }}</td>
+                            <th>{{ $p->keperluan }}</th>
+                            <td>{{ \Carbon\Carbon::parse($p->start)->format('d-m-Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($p->end)->format('d-m-Y') }}</td>
+                            <td>{{ ucfirst($p->transaction->status) }}</td>
                             <td>
-                                <a href="{{ route('guest.checkout.id', ['id' => $p->id]) }}" class="btn btn-success">Bayar</a>
-
-                                <!-- Button to Open the Modal -->
-                                <button type="button" class="btn btn-danger" data-toggle="modal"
-                                    data-target="#cancelBookingModal">
-                                    Batalkan Pesanan
-                                </button>
-
-                                <!-- The Modal -->
-                                <div class="modal fade" id="cancelBookingModal" tabindex="-1" role="dialog"
-                                    aria-labelledby="cancelBookingModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="cancelBookingModalLabel">Request Booking
-                                                    Cancellation</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <form action="{{ route('guest.req.cancel', $p->id) }}" method="POST">
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <div class="form-group">
-                                                        <label for="cancellation_reason">Reason for Cancellation:</label>
-                                                        <textarea id="cancellation_reason" name="cancellation_reason" class="form-control" required></textarea>
+                                @if ($p->status == true)
+                                    <!-- Jika status true, tampilkan button bayar -->
+                                @elseif ($p->status == false)
+                                    <!-- Jika status false, tampilkan button batalkan pesanan -->
+                                    <a href="{{ route('guest.checkout.id', ['id' => $p->id]) }}"
+                                        class="btn btn-success">Bayar</a>
+                                @endif
+                                @if ($p->cancellation_requested == false && $p->transaction->status == 'pending')
+                                    <button type="button" class="btn btn-danger waves-effect waves-light"
+                                        data-bs-toggle="modal" data-bs-target="#con-close-modal">Batalkan Pesanan</button>
+                                    <!-- sample modal content -->
+                                    <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog"
+                                        aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Alasan Pembatalan</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form action="{{ route('guest.req.cancel', $p->id) }}" method="POST">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <label for="field-7" class="form-label">Alasan
+                                                                    Pembatalan</label>
+                                                                <textarea class="form-control" id="field-7" placeholder="" name="cancellation_reason" required></textarea>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-danger">Submit Request</button>
-                                                </div>
-                                                <!-- Include jQuery and Bootstrap's JS -->
-                                                <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-                                                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-                                            </form>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary waves-effect"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-danger">Submit
+                                                            Request</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <!-- /.modal -->
+                                @endif
                             </td>
                         </tr>
                     @endforeach

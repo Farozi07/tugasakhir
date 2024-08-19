@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Tambah Pesanan')
-@section('pagetitle', 'Tambah Pemesan')
+@section('title', 'Tambah Booking')
+@section('pagetitle', 'Tambah Booking')
 @section('content')
     <div class="row">
         <div class="col-md-7 col-xl-7 mx-auto">
@@ -9,7 +9,7 @@
                 <div class="mb-3">
                     <label class="form-label">Pilih Pemesan</label> <br />
                     <select id="selectize-select2" name="name" required>
-                        <option selected disabled>Pilih Pemesan</option>
+                        <option value="" selected disabled>Pilih Pemesan</option>
                         @foreach ($data as $a)
                             <option value="{{ $a->id }}">{{ $a->name }}</option>
                         @endforeach
@@ -18,6 +18,7 @@
                 <div class="mb-3">
                     <label class="form-label">Pilih Aula</label> <br />
                     <select id="selectize-select" name="aula" required>
+                        <option value="" selected disabled>Pilih Aula</option>
                         @foreach ($aula as $b)
                             <option value="{{ $b->id }}">{{ $b->nama }}</option>
                         @endforeach

@@ -62,37 +62,24 @@
                                         <label class="form-check-label" for="checkbox-signin">Remember me</label>
                                     </div>
                                 </div>
-
-                                <div class="mb-3 d-grid text-center">
+                                <div class="mb-1 d-grid text-center">
                                     <button class="btn btn-primary" type="submit    "> Log In </button>
                                 </div>
-                                <div class="mb-3 d-grid text-center">
-                                    <a href="{{ route('login.provider.google') }}" class="btn btn-danger">
-                                        {{ __('Login with Google') }}
-                                    </a>
-                                </div>
-                                <div class="mb-3 d-grid text-center">
-                                    <a href="{{ route('login.provider.github') }}" class="btn btn-danger">
-                                        {{ __('Login with Github') }}
-                                    </a>
-                                    <!-- Add more providers as needed -->
-                                </div>
                             </form>
-
-
+                            <hr>
+                            <!-- Google Login Button -->
+                            <div class="d-grid mb-3">
+                                <a href="{{ route('login.provider.google') }}" class="btn btn-danger">
+                                    {{ __('Login with Google') }}
+                                </a>
+                            </div>
+                            <!-- Register Button -->
+                            <div class="text-center">
+                                <p>Don't have an account? <a href="{{ route('register') }}">Register</a></p>
+                            </div>
                         </div> <!-- end card-body -->
                     </div>
                     <!-- end card -->
-
-                    <div class="row mt-3">
-                        <div class="col-12 text-center">
-                            <p> <a href="pages-recoverpw.html" class="text-muted ms-1"><i
-                                        class="fa fa-lock me-1"></i>Forgot your password?</a></p>
-                            <p class="text-muted">Don't have an account? <a href="pages-register.html"
-                                    class="text-dark ms-1"><b>Sign Up</b></a></p>
-                        </div> <!-- end col -->
-                    </div>
-                    <!-- end row -->
 
                 </div> <!-- end col -->
             </div>

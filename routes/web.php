@@ -42,20 +42,19 @@ Route::get('/home', function(){
 
 Route::prefix('admin')->middleware(['auth','role:admin'])->group(function(){
     Route::get('/dashboard', [AdminController::class,'index'])->name('admin.dashboard');
-    Route::post('/events', [AdminController::class, 'createEvent'])->name('admin.events.store');
-    Route::put('/events/{id}', [AdminController::class, 'updateEvent'])->name('admin.events.update');
-    Route::delete('/events/{id}', [AdminController::class, 'deleteEvent'])->name('admin.events.destroy');
-
+    Route::get('/list/booking',[AdminController::class,'listBooking'])->name('admin.list.booking');
+    Route::get('/list/booking/pending',[AdminController::class,'listBookingPending'])->name('admin.list.booking.pending');
+    Route::get('/list/akun', [AdminController::class, 'daftarAkun'])->name('admin.daftar.akun');
+    Route::post('/list/edit/akun', [AdminController::class, 'editAkun'])->name('admin.edit.akun');
+    Route::delete('/list/hapus/akun/{id}', [AdminController::class, 'deleteAkun'])->name('admin.hapus.akun');
 
     Route::get('/list/guest',[AdminController::class,'listBookingGuest'])->name('admin.list.booking.guest');
+    Route::delete('/list/guest/{id}',[AdminController::class,'listBookingDelete'])->name('admin.list.booking.delete');
     Route::get('/list/cancel',[AdminController::class,'getCancellationRequests'])->name('admin.list.booking.cancel.guest');
     Route::get('/cancel/pesanan', [AdminController::class, 'getCancellationRequests'])->name('admin.cancellationRequests');
     Route::post('/cancel/{id}', [AdminController::class, 'processCancellation'])->name('admin.processCancellation');
 
-// BookingController.php
-
     Route::get('/list/employee',[AdminController::class,'listBookingEmployee'])->name('admin.list.booking.employee');
-
 
     Route::get('/create/guest',[AdminController::class,'createGuest'])->name('admin.create.guest');
     Route::post('/store/guest',[AdminController::class,'storeGuest'])->name('admin.store.guest');
@@ -68,6 +67,8 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->group(function(){
 
     Route::get('/create/booking/employee',[AdminController::class,'createBookingEmployee'])->name('admin.create.booking.employee');
     Route::post('/store/booking/employee',[AdminController::class,'storeBookingEmployee'])->name('admin.store.booking.employee');
+
+    Route::get('/bookings/export', [AdminController::class, 'export'])->name('admin.booking.export');
 
 
 });
@@ -91,6 +92,7 @@ Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
 });
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/informasi', [IndexController::class, 'info'])->name('info');
 
 Auth::routes();
 

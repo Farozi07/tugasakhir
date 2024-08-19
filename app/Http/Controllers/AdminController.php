@@ -11,6 +11,9 @@ use Hash;
 use Carbon\Carbon;
 use Auth;
 
+use App\Exports\BookingsExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -20,7 +23,7 @@ class AdminController extends Controller
     public function index(Request $request){
         $events = Booking::with('aula')
             ->where('status',true)
-            ->where('start', '>=', Carbon::today())
+            ->where('end', '>=', Carbon::today())
             ->select('id', 'start', 'end', 'keperluan', 'aula_id')
             ->get()
             ->map(function ($booking) {
@@ -33,21 +36,34 @@ class AdminController extends Controller
                     'className'=>['bg-'. $booking->aula->category]
                 ];
             });
-            // return $events;
-        return view('admin.dashboard',['events'=>$events]);
-    }
 
-    public function listBookingGuest(){
-        $data=Booking::where('status',true)
+            $today = Carbon::today(); // Mendapatkan tanggal hari ini
+            $bookingsTrueCount = Booking::where('status', true)->count();
+            $bookingsFalseCount = Booking::where('status', false)->count();
+            $bookingsCancel = Booking::where('cancellation_requested', true)->count();
+        $users = User::all();
+        $totalUsers = $users->count() - 1;
+        return view('admin.dashboard', compact('events','bookingsTrueCount', 'bookingsFalseCount', 'totalUsers','bookingsCancel'));
+    }
+    public function listBooking(){
+        $booking=Booking::where('status',true)
+
         ->with(['user' => function($g){
             $g->with('guest');
         }])
         ->whereHas('user',function($u){
             $u->whereHas('guest');
-        })
+        })->where('end', '>=', Carbon::today())
         ->get();
-        // return $data;
-        return view ('admin.list_booking_guest',['data'=>$data]);
+        return view('admin.list_booking',compact('booking'));
+    }
+    public function listBookingPending(){
+        $booking=Booking::where('status',false)->where('end', '>=', Carbon::today())->get();
+        return view('admin.list_booking_pending',compact('booking'));
+    }
+    public function listBookingDelete($id){
+        Booking::where('id',$id)->forceDelete();
+        return redirect()->back()->with('success','Berhasil Menghapus Booking');
     }
     public function getCancellationRequests(){
         $data = Booking::where('cancellation_requested', true)
@@ -85,6 +101,7 @@ class AdminController extends Controller
         ->whereHas('user',function($u){
             $u->whereHas('employee');
         })
+        ->where('end', '>=', Carbon::today())
         ->get();
         return view ('admin.list_booking_employee',['data'=>$data]);
     }
@@ -116,6 +133,16 @@ class AdminController extends Controller
     }
     public function storeEmployee(Request $request){
         $role = Role::where('name','employee')->first();
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'nama_bidang' => 'required|string',
+        ],[
+            'email' => 'Kolom E-mail belum diisi',
+            'email.unique' => 'Email ini sudah digunakan, silakan gunakan email lain.',
+            'name' => 'Kolom nama belum diisi',
+            'nama_bidang' => 'Kolom nama bidang belum diisi',
+        ]);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -126,7 +153,7 @@ class AdminController extends Controller
         Employee::create([
             'user_id'=>$user->id,
             'nama_bidang'=>$request->nama_bidang,
-            'penanggung_jawab'=>$request->penanggung_jawab,
+            'penanggung_jawab'=>$request->name,
         ]);
         return redirect()->route('admin.create.employee')->with('success', 'Employee created successfully.');
     }
@@ -162,5 +189,55 @@ class AdminController extends Controller
             'status' => true,
         ]);
         return redirect()->route('admin.create.booking.employee')->with('success', 'Kegiatan Berhasil di Tambahkan.');
+    }
+
+    public function daftarAkun(){
+        // return $booking;
+        $users = User::whereHas('role', function ($query) {
+            $query->where('name', '!=', 'admin');
+        })->get();
+        return view('admin.list_account',compact('users'));
+    }
+    public function editAkun(Request $request){
+        $user=User::where('id',$request->id)->first();
+        if ($request->name != $user->name) {
+            $user->name = $request->name;
+        }
+        if ($request->email != $user->email) {
+            $user->email = $request->email;
+        }
+        if (isset($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+        switch ($user->role->name) {
+            case 'guest':
+                $guest=Guest::where('user_id',$user->id)->first();
+                $guest->no_ktp=$request->no_ktp;
+                $guest->telp=$request->telp;
+                $guest->alamat=$request->alamat;
+                $guest->save();
+                break;
+            case 'employee':
+                $employee=Employee::where('user_id',$user->id)->first();
+                $employee->nama_bidang=$request->nama_bidang;
+                $employee->penanggung_jawab=$request->name;
+                $employee->save();
+                break;
+            default:
+                # code...
+                break;
+        }
+        return redirect()->back()->with('success','Berhasil Mengubah Data');
+    }
+    public function deleteAkun($id){
+        User::where('id',$id)->forceDelete();
+        return redirect()->back()->with('success','Berhasil Menghapus Akun');
+    }
+    public function export(Request $request)
+    {
+
+        $year = $request->input('year', date('Y'));
+        return Excel::download(new BookingsExport($year), 'Arsip Pemakaian Aula Tahun ' . $year . '.xlsx');
     }
 }

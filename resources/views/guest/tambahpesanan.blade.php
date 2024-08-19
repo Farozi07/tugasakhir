@@ -1,47 +1,53 @@
 @extends('layouts.app')
-@section('title', 'Tambah Pesanan')
-@section('pagetitle', 'Tambah Pesanan')
+@section('title', 'Buat Pesanan')
+@section('pagetitle', 'Buat Pesanan')
 @section('content')
     <div class="row">
         <div class="col-md-7 col-xl-7 mx-auto">
             <div id="error-message" style="display:none; color: red;"></div>
             <form action="{{ route('guest.store.booking') }}" method="POST">
                 @csrf
-                <div class="mb-3">
-                    <label for="aula" class="form-label">Pilih Aula:</label>
-                    <select class="form-select" id="aula" name="aula" required>
-                        <option value="" selected disabled>Pilih Aula</option>
-                        @foreach ($aula as $a)
-                            <option value="{{ $a->id }}">{{ $a->nama }}</option>
-                        @endforeach
-                    </select>
-                    @error('aula')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                <div class="form-container mx-auto">
+                    <div class="mb-3">
+                        <label class="form-label">Pilih Aula</label> <br />
+                        <select id="selectize-select" name="aula" class="required">
+                            <option value="" selected disabled>Pilih Aula</option>
+                            @foreach ($aula as $b)
+                                <option value="{{ $b->id }}">{{ $b->nama }}</option>
+                            @endforeach
+                        </select>
+                        @error('aula')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Start</label>
+                            <input type="text" id="start-humanfd-datepicker" class="form-control" placeholder=""
+                                name="start">
+                            @error('start')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">End</label>
+                            <input type="text" id="end-humanfd-datepicker" class="form-control" placeholder=""
+                                name="end">
+                            @error('end')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="keperluan">Keperluan</label>
+                        <input type="text" id="keperluan" name="keperluan" value="{{ old('keperluan') }}"
+                            class="form-control @error('keperluan') is-invalid @enderror">
+                        @error('keperluan')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Tambah Booking</button>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Start</label>
-                    <input type="text" id="start-humanfd-datepicker" class="form-control" placeholder="" name="start">
-                    @error('start')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">End</label>
-                    <input type="text" id="end-humanfd-datepicker" class="form-control" placeholder="" name="end">
-                    @error('end')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="keperluan">Keperluan</label>
-                    <input type="text" id="keperluan" name="keperluan" value="{{ old('keperluan') }}"
-                        class="form-control @error('keperluan') is-invalid @enderror">
-                    @error('keperluan')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <button type="submit" class="btn btn-primary"> Tambahkan</button>
             </form>
         </div>
         <!-- Modal -->

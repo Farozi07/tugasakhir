@@ -7,10 +7,10 @@
     <title>Pemesanan Aula BPSDM Prov.Kalbar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-    <meta content="Coderthemes" name="author" />
+    <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/favicon.ico">
+    <link href="{{ asset('/') }}assets/images/logo-bpsdm.png">
 
     <!-- App css -->
 
@@ -23,7 +23,7 @@
 </head>
 
 <body class="loading" data-layout-mode="horizontal" data-layout-color="light" data-layout-size="fluid"
-    data-topbar-color="dark" data-leftbar-position="fixed">
+    data-topbar-color="light" data-leftbar-position="fixed">
 
     <!-- Begin page -->
     <div id="wrapper">
@@ -34,18 +34,18 @@
                 <div class="logo-box">
                     <a href="index.html" class="logo logo-light text-center">
                         <span class="logo-sm">
-                            <img src="assets/images/logo-sm.png" alt="" height="22">
+                            <img src="assets/images/logo-bpsdm.png" alt="" height="30">
                         </span>
                         <span class="logo-lg">
-                            <img src="assets/images/logo-light.png" alt="" height="16">
+                            <img src="assets/images/logo-bpsdm.png" alt="" height="45">
                         </span>
                     </a>
                     <a href="index.html" class="logo logo-dark text-center">
                         <span class="logo-sm">
-                            <img src="assets/images/logo-sm.png" alt="" height="22">
+                            <img src="assets/images/logo-bpsdm.png" alt="" height="30">
                         </span>
                         <span class="logo-lg">
-                            <img src="assets/images/logo-dark.png" alt="" height="16">
+                            <img src="assets/images/logo-bpsdm.png" alt="" height="45">
                         </span>
                     </a>
                 </div>
@@ -65,7 +65,6 @@
                 </ul>
 
                 <ul class="list-unstyled topnav-menu topnav-menu-left mb-0">
-
                     <li>
                         <!-- Mobile menu toggle (Horizontal Layout)-->
                         <a class="navbar-toggle nav-link" data-bs-toggle="collapse"
@@ -77,6 +76,17 @@
                             </div>
                         </a>
                         <!-- End mobile menu toggle-->
+                    </li>
+                    <li class="ms-5 d-lg-none">
+                        @guest
+                            <a href="{{ route('login') }}" class="nav-link right-bar-toggle waves-effect waves-light">
+                                <i class="btn btn-primary">LOGIN</i>
+                            </a>
+                        @endguest
+                        @auth
+                            <a href="{{ url('/home') }}" class="nav-link right-bar-toggle waves-effect waves-light">
+                                <i class="btn btn-primary">LOGIN</i>
+                            @endauth
                     </li>
 
                 </ul>
@@ -95,7 +105,7 @@
                     <div class="collapse navbar-collapse" id="topnav-menu-content">
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                                <a class="nav-link arrow-none" href="index.html" id="topnav-dashboard" role="button"
+                                <a class="nav-link arrow-none" href="/" id="topnav-dashboard" role="button"
                                     aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-view-dashboard me-1"></i> Dashboard
                                 </a>
@@ -103,8 +113,8 @@
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link arrow-none" href="#" id="topnav-components" role="button"
-                                    aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link arrow-none" href="{{ route('info') }}" id="topnav-components"
+                                    role="button" aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-lifebuoy me-1"></i> Informasi
                                 </a>
                             </li>
@@ -218,15 +228,17 @@
                             <div class="col-md-6">
                                 <script>
                                     document.write(new Date().getFullYear())
-                                </script> &copy; Adminto theme by <a href="">Coderthemes</a>
+                                </script> &copy; Badan Pengembangan Sumber Daya Manusia Provinsi
+                                Kalimantan
+                                Barat</a>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="text-md-end footer-links d-none d-sm-block">
                                     <a href="javascript:void(0);">About Us</a>
                                     <a href="javascript:void(0);">Help</a>
                                     <a href="javascript:void(0);">Contact Us</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </footer>
@@ -263,7 +275,7 @@
                             events: @json($events),
                             displayEventTime: false,
                             selectable: true,
-                            editable: false, // Enable editing events
+                            editable: true, // Enable editing events
                             eventClick: function(info) {
                                 // Ambil data event
                                 var eventObj = info.event;

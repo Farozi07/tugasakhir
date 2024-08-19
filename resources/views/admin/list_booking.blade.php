@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Daftar Kegiatan')
-@section('pagetitle', 'Daftar Kegiatan')
+@section('title', 'Daftar Booking')
+@section('pagetitle', 'Daftar Booking')
 @section('content')
     <div class="row">
         <div class="col-12">
@@ -9,18 +9,16 @@
                     <tr>
                         <th>Nama</th>
                         <th>Aula</th>
-                        <th>Bidang</th>
                         <th>Mulai</th>
                         <th>Berakhir</th>
-                        <th>Kegiatan</th>
+                        <th>Keperluan</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data as $p)
+                    @foreach ($booking as $p)
                         <tr>
-                            <td>{{ $p->user->name }}</td>
+                            <th>{{ $p->user->name }}</th>
                             <td>{{ $p->aula->nama }}</td>
-                            <td>{{ $p->user->employee->nama_bidang }}</td>
                             <td>{{ \Carbon\Carbon::parse($p->start)->format('d-m-Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($p->end)->format('d-m-Y') }}</td>
                             <td>{{ $p->keperluan }}</td>

@@ -35,16 +35,7 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="penanggung_jawab">Penanggung Jawab</label>
-                    <input type="text" id="penanggung_jawab" name="penanggung_jawab"
-                        value="{{ old('penanggung_jawab') }}"
-                        class="form-control @error('penanggung_jawab') is-invalid @enderror">
-                    @error('penanggung_jawab')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <button type="submit" class="btn btn-primary"> Tambahkan User</button>
+                <button type="submit" class="btn btn-primary"> Tambahkan Karyawan</button>
             </form>
         </div>
 

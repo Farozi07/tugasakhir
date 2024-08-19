@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 class GuestController extends Controller
 {
     public function index() {
+        $bookingsPaid = Booking::where('status', 'true')->get();
+        $bookingsUnpaid = Booking::where('status', 'false')->get();
         // Ambil ID pengguna yang sedang login
         $userId = Auth::user()->id;
 
@@ -41,7 +43,7 @@ class GuestController extends Controller
         // Tampilkan dashboard jika data sudah lengkap
         $events = Booking::with('aula')
             ->where('status',true)
-            ->where('start', '>=', Carbon::today())
+            ->where('end', '>=', Carbon::today())
             ->select('id', 'start', 'end', 'keperluan', 'aula_id')
             ->get()
             ->map(function ($booking) {
@@ -55,7 +57,12 @@ class GuestController extends Controller
                 ];
             });
             // return $events;
-        return view('guest.dashboard',['events'=>$events]);
+            $userId = Auth::user()->id;
+            // Mengambil booking yang sudah dan belum dibayar berdasarkan user_id
+            $bookingsPaid = Booking::where('user_id', $userId)->where('status', '1')->get();
+            $bookingsUnpaid = Booking::where('user_id', $userId)->where('status', '0')->get();
+            // return $bookingsUnpaid;
+        return view('guest.dashboard',['events'=>$events,'bookingsPaid'=>$bookingsPaid,'bookingsUnpaid'=>$bookingsUnpaid]);
     }
     // Menampilkan halaman untuk mengisi data guest
     public function fillData()
@@ -98,6 +105,12 @@ class GuestController extends Controller
     }
     public function createBooking(){
         $user = Auth::user();
+        $userId = Auth::user()->id;
+        $guest = Guest::where('user_id', $userId)->first();
+        // Cek jika data guest sudah lengkap
+        if (!$guest->no_ktp || !$guest->telp || !$guest->alamat) {
+            return redirect()->route('guest.fillData')->with('info', 'Anda perlu mengisi data profil terlebih dahulu.');
+        }
         // Cek apakah user memiliki booking yang belum dibayar
         $pendingBooking = Booking::where('user_id', $user->id)
                                   ->where('status', false)
@@ -114,7 +127,8 @@ class GuestController extends Controller
         $validatedData = $request->validate([
             'start' => 'required|date',
             'end' => 'required|date|after_or_equal:start',
-            'aula' => 'required|exists:aulas,id',
+            'aula' => 'required|in:1,2,3',
+            'keperluan' => 'required'
         ]);
 
         $start = $validatedData['start'];

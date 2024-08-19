@@ -21,7 +21,7 @@
                         <tr>
                             <th>{{ $loop->iteration }}</th>
                             <td>{{ $p->user->name }}</td>
-                            <td>{{ $p->aula->name }}</td>
+                            <td>{{ $p->aula->nama }}</td>
                             <td>{{ \Carbon\Carbon::parse($p->start)->format('d M Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($p->end)->format('d M Y') }}</td>
                             <td>{{ $p->cancellation_reason }}</td>

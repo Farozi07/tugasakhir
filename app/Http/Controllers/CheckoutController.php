@@ -14,8 +14,14 @@ class CheckoutController extends Controller
 {
     public function list(){
         $user = Auth::user()->id;
+        $guest = Guest::where('user_id', $user)->first();
+        // Cek jika data guest sudah lengkap
+        if (!$guest->no_ktp || !$guest->telp || !$guest->alamat) {
+            return redirect()->route('guest.fillData')->with('info', 'Anda perlu mengisi data profil terlebih dahulu.');
+        }
         $bookings = Booking::where('user_id', $user)
         ->with('transaction')
+        ->orderBy('created_at', 'desc')
         ->get();
         return view('guest.list',['bookings'=>$bookings]);
     }

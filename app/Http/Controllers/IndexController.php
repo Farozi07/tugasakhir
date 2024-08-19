@@ -10,7 +10,7 @@ class IndexController extends Controller
     public function index() {
         $events = Booking::with('aula')
         ->where('status',true)
-        ->where('start', '>=', Carbon::today())
+        ->where('end', '>=', Carbon::today())
         ->select('id', 'start', 'end', 'keperluan', 'aula_id')
         ->get()
         ->map(function ($booking) {
@@ -25,5 +25,8 @@ class IndexController extends Controller
         });
         // return $events;
         return view('index',['events'=>$events]);
+    }
+    public function info() {
+        return view ('informasi');
     }
 }
