@@ -8,36 +8,52 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Pilih Pemesan</label> <br />
-                    <select id="selectize-select2" name="name" required>
+                    <select id="selectize-select2" name="name">
                         <option value="" selected disabled>Pilih Pemesan</option>
                         @foreach ($data as $a)
                             <option value="{{ $a->id }}">{{ $a->name }}</option>
                         @endforeach
                     </select>
+                    @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Pilih Aula</label> <br />
-                    <select id="selectize-select" name="aula" required>
+                    <select id="selectize-select" name="aula">
                         <option value="" selected disabled>Pilih Aula</option>
                         @foreach ($aula as $b)
                             <option value="{{ $b->id }}">{{ $b->nama }}</option>
                         @endforeach
                     </select>
+                    @error('aula')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Start</label>
-                    <input type="text" id="start-humanfd-datepicker" class="form-control" placeholder="" name="start">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">End</label>
-                    <input type="text" id="end-humanfd-datepicker" class="form-control" placeholder="" name="end">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Mulai</label>
+                        <input type="text" id="disable-datepicker-start" class="form-control" placeholder=""
+                            name="start">
+                        @error('start')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Berakhir</label>
+                        <input type="text" id="disable-datepicker-end" class="form-control" placeholder=""
+                            name="end">
+                        @error('end')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="keperluan">Keperluan</label>
                     <input type="text" id="keperluan" name="keperluan" value="{{ old('keperluan') }}"
                         class="form-control @error('keperluan') is-invalid @enderror">
                     @error('keperluan')
-                        <div class="text-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                 </div>
                 <button type="submit" class="btn btn-primary"> Tambahkan</button>

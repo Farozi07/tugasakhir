@@ -8,7 +8,7 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label" for="name">Nama</label>
-                    <input type="text" id="name" name="name" value="{{ old('name') }}"
+                    <input type="text" id="name" name="name"
                         class="form-control @error('name') is-invalid @enderror">
                     @error('name')
                         <div class="text-danger">{{ $message }}</div>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="email">Email</label>
-                    <input type="email" id="email" name="email" value="{{ old('email') }}"
+                    <input type="email" id="email" name="email"
                         class="form-control @error('email') is-invalid @enderror">
                     @error('email')
                         <div class="text-danger">{{ $message }}</div>
@@ -24,12 +24,16 @@
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input class="form-control" type="password" required="" id="password"
+                    <input class="form-control  @error('password') is-invalid @enderror" type="password" id="password"
                         placeholder="Enter your password" name="password">
+                    @error('password')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label" for="nama_bidang">Nama Bidang</label>
-                    <input type="text" id="nama_bidang" name="nama_bidang" value="{{ old('nama_bidang') }}"
+                    <input type="text" id="nama_bidang" name="nama_bidang"
                         class="form-control @error('nama_bidang') is-invalid @enderror">
                     @error('nama_bidang')
                         <div class="text-danger">{{ $message }}</div>

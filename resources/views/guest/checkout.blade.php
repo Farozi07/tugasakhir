@@ -3,18 +3,21 @@
 @section('title', 'Checkout')
 
 @section('content')
-    <div class="d-flex justify-content-center">
-        <div class="card">
-            <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
-                Anda akan melakukan penyewaan <strong>{{ $bookings->aula->nama }}</strong> dengan harga
+    <div class="card shadow-lg border-0">
+        <div class="card-body text-center">
+            <h3 class="card-title mb-4">Pembayaran Booking Aula</h3>
+            <p class="card-text mb-3 font-20">
+                Anda akan melakukan pembayaran booking <strong>{{ $bookings->aula->nama }}</strong> dengan harga
                 <strong>Rp{{ number_format($bookings->transaction['price'], 0, ',', '.') }}</strong>
-                <button type="button" class="btn btn-primary mt-3" id="pay-button">
-                    Bayar Sekarang
-                </button>
-            </div>
+            </p>
+            <button type="button" class="btn btn-primary btn-lg mt-3" id="pay-button">
+                Bayar Sekarang
+            </button>
         </div>
     </div>
 @endsection
+
+
 @section('scripts')
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     <script type="text/javascript">

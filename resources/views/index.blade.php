@@ -10,7 +10,7 @@
     <meta content="" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link href="{{ asset('/') }}assets/images/logo-bpsdm.png">
+    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/logo-bpsdm-sm.ico">
 
     <!-- App css -->
 
@@ -139,203 +139,222 @@
                         <div class="col-12">
                             <div class="page-title-box">
                                 <h4 class="page-title">Jadwal Pemesanan Aula</h4>
+
                             </div>
                         </div>
                     </div>
-                    <!-- end page title -->
+                </div>
+                <!-- end page title -->
 
+                <div class="row">
+
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                        class="active"></li>
+                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                                </ol>
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="carousel-item active">
+                                        <img class="d-block img-fluid"
+                                            src="{{ asset('/') }}assets/images/small/img-3.jpg" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block img-fluid"
+                                            src="{{ asset('/') }}assets/images/small/img-2.jpg"
+                                            alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block img-fluid"
+                                            src="{{ asset('/') }}assets/images/small/img-1.jpg" alt="Third slide">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div><!-- end col -->
+
+                    <div class="col-xl-6 col-md-6">
+
+                        <div id="calendar"></div>
+                    </div><!-- end col -->
+
+                    <!-- end row -->
+                    <!-- Standard modal content -->
+                    <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="standard-modalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="standard-modalLabel">Detail Booking</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Nama Aula:</strong> <span id="modalTitle"></span></p>
+                                    <p><strong>Mulai:</strong> <span id="modalStart"></span></p>
+                                    <p><strong>Berakhir:</strong> <span id="modalEnd"></span></p>
+                                    <p><strong>Keperluan:</strong> <span id="modalKeperluan"></span></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+            <!-- Footer Start -->
+            <footer class="footer">
+                <div class="container-fluid">
                     <div class="row">
-
-                        <div class="col-xl-6 col-md-6">
-                            <div class="card">
-                                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                                            class="active"></li>
-                                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-                                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-                                    </ol>
-                                    <div class="carousel-inner" role="listbox">
-                                        <div class="carousel-item active">
-                                            <img class="d-block img-fluid"
-                                                src="{{ asset('/') }}assets/images/small/img-3.jpg"
-                                                alt="First slide">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img class="d-block img-fluid"
-                                                src="{{ asset('/') }}assets/images/small/img-2.jpg"
-                                                alt="Second slide">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img class="d-block img-fluid"
-                                                src="{{ asset('/') }}assets/images/small/img-1.jpg"
-                                                alt="Third slide">
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
-                                        data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
-                                        data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div><!-- end col -->
-
-                        <div class="col-xl-6 col-md-6">
-
-                            <div id="calendar"></div>
-                        </div><!-- end col -->
-
-                        <!-- end row -->
-                        <!-- Standard modal content -->
-                        <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog"
-                            aria-labelledby="standard-modalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="standard-modalLabel">Detail Booking</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p><strong>Title:</strong> <span id="modalTitle"></span></p>
-                                        <p><strong>Mulai:</strong> <span id="modalStart"></span></p>
-                                        <p><strong>Berakhir:</strong> <span id="modalEnd"></span></p>
-                                        <p><strong>Keperluan:</strong> <span id="modalKeperluan"></span></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light"
-                                            data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
+                        <div class="col-md-6">
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script> &copy; Badan Pengembangan Sumber Daya Manusia Provinsi
+                            Kalimantan
+                            Barat</a>
                         </div>
-                        <!-- /.modal -->
-
-                    </div> <!-- container -->
-
-                </div> <!-- content -->
-
-                <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script> &copy; Badan Pengembangan Sumber Daya Manusia Provinsi
-                                Kalimantan
-                                Barat</a>
+                        <div class="col-md-6">
+                            <div class="text-md-end footer-links d-none d-sm-block">
+                                <h5>Total Pengunjung Hari Ini: <span id="visitorCount"></span></h5>
                             </div>
-                            {{-- <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-sm-block">
-                                    <a href="javascript:void(0);">About Us</a>
-                                    <a href="javascript:void(0);">Help</a>
-                                    <a href="javascript:void(0);">Contact Us</a>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
-                </footer>
-                <!-- end Footer -->
+                </div>
+            </footer>
+            <!-- end Footer -->
 
-                <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+            <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    let targetValue = {{ $totalVisitorsToday }};
+                    let currentValue = targetValue + Math.floor(Math.random() * 20) +
+                        10; // Memulai dengan nilai acak yang lebih besar
+                    let displayElement = document.getElementById('visitorCount');
+                    let duration = 3000; // 3 detik
+                    let stepTime = Math.abs(Math.floor(duration / (currentValue - targetValue)));
 
-                <script>
-                    function formatDate(date) {
-                        var d = new Date(date);
-                        var day = ('0' + d.getDate()).slice(-2);
-                        var month = ('0' + (d.getMonth() + 1)).slice(-2);
-                        var year = d.getFullYear();
-                        return `${day}-${month}-${year}`;
+                    function countdown() {
+                        if (currentValue > targetValue) {
+                            currentValue--;
+                            displayElement.innerText = currentValue;
+                            setTimeout(countdown, stepTime);
+                        }
                     }
 
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var calendarEl = document.getElementById('calendar');
-                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                            themeSystem: "bootstrap",
-                            bootstrapFontAwesome: !1,
-                            buttonText: {
-                                today: "Today",
-                                month: "Month",
-                                prev: "Prev",
-                                next: "Next",
-                            },
-                            headerToolbar: {
-                                left: "prev,next today",
-                                center: "title",
-                                right: "",
-                            },
-                            initialView: 'dayGridMonth',
-                            events: @json($events),
-                            displayEventTime: false,
-                            selectable: true,
-                            editable: true, // Enable editing events
-                            eventClick: function(info) {
-                                // Ambil data event
-                                var eventObj = info.event;
-                                // Format tanggal
-                                var formattedStart = formatDate(eventObj.start);
-                                var formattedEnd = formatDate(eventObj.end);
+                    countdown();
+                });
+            </script>
+            </script>
 
-                                // Isi modal dengan data event
-                                document.getElementById('modalTitle').textContent = eventObj.title;
-                                document.getElementById('modalStart').textContent = formattedStart;
-                                document.getElementById('modalEnd').textContent = formattedEnd;
-                                document.getElementById('modalKeperluan').textContent = eventObj.extendedProps
-                                    .keperluan;
+            <script>
+                function formatDate(date) {
+                    var d = new Date(date);
+                    var day = ('0' + d.getDate()).slice(-2);
+                    var month = ('0' + (d.getMonth() + 1)).slice(-2);
+                    var year = d.getFullYear();
+                    return `${day}-${month}-${year}`;
+                }
 
-                                // Tampilkan modal
-                                $('#standard-modal').modal('show');
-                            }
-                        });
-                        calendar.render();
+                document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        themeSystem: "bootstrap",
+                        bootstrapFontAwesome: !1,
+                        buttonText: {
+                            today: "Today",
+                            month: "Month",
+                            prev: "Prev",
+                            next: "Next",
+                        },
+                        headerToolbar: {
+                            left: "prev,next today",
+                            center: "title",
+                            right: "",
+                        },
+                        initialView: 'dayGridMonth',
+                        events: @json($events),
+                        displayEventTime: false,
+                        selectable: true,
+                        editable: true, // Enable editing events
+                        eventClick: function(info) {
+                            // Ambil data event
+                            var eventObj = info.event;
+                            // Format tanggal
+                            var formattedStart = formatDate(eventObj.start);
+                            var formattedEnd = formatDate(eventObj.end);
+
+                            // Isi modal dengan data event
+                            document.getElementById('modalTitle').textContent = eventObj.title;
+                            document.getElementById('modalStart').textContent = formattedStart;
+                            document.getElementById('modalEnd').textContent = formattedEnd;
+                            document.getElementById('modalKeperluan').textContent = eventObj.extendedProps
+                                .keperluan;
+
+                            // Tampilkan modal
+                            $('#standard-modal').modal('show');
+                        }
                     });
-                </script>
-            </div>
-
-
-            <!-- ============================================================== -->
-            <!-- End Page content -->
-            <!-- ============================================================== -->
-
-
+                    calendar.render();
+                });
+            </script>
         </div>
-        <!-- END wrapper -->
 
-        <!-- Vendor -->
-        <script src="{{ asset('/') }}assets/libs/jquery/jquery.min.js"></script>
-        <script src="{{ asset('/') }}assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="{{ asset('/') }}assets/libs/simplebar/simplebar.min.js"></script>
-        <script src="{{ asset('/') }}assets/libs/node-waves/waves.min.js"></script>
-        <script src="{{ asset('/') }}assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
-        <script src="{{ asset('/') }}assets/libs/jquery.counterup/jquery.counterup.min.js"></script>
-        <script src="{{ asset('/') }}assets/libs/feather-icons/feather.min.js"></script>
 
-        <!-- plugin js -->
-        <script src="{{ asset('/') }}assets/libs/moment/min/moment.min.js"></script>
-        <script src="{{ asset('/') }}assets/libs/fullcalendar/main.min.js"></script>
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
 
-        <!-- Calendar init -->
-        <script src="{{ asset('/') }}assets/js/pages/calendar.init.js"></script>
 
-        <!-- knob plugin -->
-        <script src="{{ asset('/') }}assets/libs/jquery-knob/jquery.knob.min.js"></script>
+    </div>
+    <!-- END wrapper -->
 
-        <!--Morris Chart-->
-        <script src="{{ asset('/') }}assets/libs/morris.js06/morris.min.js"></script>
-        <script src="{{ asset('/') }}assets/libs/raphael/raphael.min.js"></script>
+    <!-- Vendor -->
+    <script src="{{ asset('/') }}assets/libs/jquery/jquery.min.js"></script>
+    <script src="{{ asset('/') }}assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('/') }}assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="{{ asset('/') }}assets/libs/node-waves/waves.min.js"></script>
+    <script src="{{ asset('/') }}assets/libs/waypoints/lib/jquery.waypoints.min.js"></script>
+    <script src="{{ asset('/') }}assets/libs/jquery.counterup/jquery.counterup.min.js"></script>
+    <script src="{{ asset('/') }}assets/libs/feather-icons/feather.min.js"></script>
 
-        <!-- Dashboar init js-->
-        <script src="{{ asset('/') }}assets/js/pages/dashboard.init.js"></script>
+    <!-- plugin js -->
+    <script src="{{ asset('/') }}assets/libs/moment/min/moment.min.js"></script>
+    <script src="{{ asset('/') }}assets/libs/fullcalendar/main.min.js"></script>
 
-        <!-- App js-->
-        <script src="{{ asset('/') }}assets/js/app.min.js"></script>
+    <!-- Calendar init -->
+    <script src="{{ asset('/') }}assets/js/pages/calendar.init.js"></script>
+
+    <!-- knob plugin -->
+    <script src="{{ asset('/') }}assets/libs/jquery-knob/jquery.knob.min.js"></script>
+
+    <!--Morris Chart-->
+    <script src="{{ asset('/') }}assets/libs/morris.js06/morris.min.js"></script>
+    <script src="{{ asset('/') }}assets/libs/raphael/raphael.min.js"></script>
+
+    <!-- Dashboar init js-->
+    <script src="{{ asset('/') }}assets/js/pages/dashboard.init.js"></script>
+
+    <!-- App js-->
+    <script src="{{ asset('/') }}assets/js/app.min.js"></script>
 
 </body>
 

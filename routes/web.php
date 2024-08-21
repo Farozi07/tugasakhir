@@ -48,7 +48,7 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->group(function(){
     Route::post('/list/edit/akun', [AdminController::class, 'editAkun'])->name('admin.edit.akun');
     Route::delete('/list/hapus/akun/{id}', [AdminController::class, 'deleteAkun'])->name('admin.hapus.akun');
 
-    Route::get('/list/guest',[AdminController::class,'listBookingGuest'])->name('admin.list.booking.guest');
+    // Route::get('/list/guest',[AdminController::class,'listBookingGuest'])->name('admin.list.booking.guest');
     Route::delete('/list/guest/{id}',[AdminController::class,'listBookingDelete'])->name('admin.list.booking.delete');
     Route::get('/list/cancel',[AdminController::class,'getCancellationRequests'])->name('admin.list.booking.cancel.guest');
     Route::get('/cancel/pesanan', [AdminController::class, 'getCancellationRequests'])->name('admin.cancellationRequests');
@@ -67,6 +67,7 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->group(function(){
 
     Route::get('/create/booking/employee',[AdminController::class,'createBookingEmployee'])->name('admin.create.booking.employee');
     Route::post('/store/booking/employee',[AdminController::class,'storeBookingEmployee'])->name('admin.store.booking.employee');
+    Route::delete('/delete/booking/employee/{id}',[AdminController::class,'deleteBookingEmployee'])->name('admin.delete.booking.employee');
 
     Route::get('/bookings/export', [AdminController::class, 'export'])->name('admin.booking.export');
 
@@ -77,6 +78,7 @@ Route::prefix('employee')->middleware(['auth','role:employee'])->group(function(
 });
 Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
     Route::get('/dashboard', [GuestController::class,'index'])->name('guest.dashboard');
+    Route::get('/informasi',[GuestController::class,'info'])->name('guest.info');
     Route::get('/fill-data', [GuestController::class, 'fillData'])->name('guest.fillData');
     Route::post('/save-data', [GuestController::class, 'saveData'])->name('guest.saveData');
 
@@ -86,9 +88,9 @@ Route::prefix('guest')->middleware(['auth','role:guest'])->group(function(){
 
     Route::get('/list',[CheckoutController::class,'list'])->name('guest.list.booking');
     Route::post('/list/request-cancellation/{id}', [CheckoutController::class, 'requestCancellation'])->name('guest.req.cancel');
-    Route::get('/list/checkout/{id}',[CheckoutController::class,'listshow'])->name('guest.checkout.id');
-    Route::post('/checkout/{id}', [CheckoutController::class, 'process'])->name('guest.checkout-process');
-    Route::get('/checkout/success/{bookings}', [CheckoutController::class, 'success'])->name('guest.transaction.success');
+    // Route::get('/list/checkout',[CheckoutController::class,'listshow'])->name('guest.checkout.id');
+    // Route::post('/checkout/{id}', [CheckoutController::class, 'process'])->name('guest.checkout-process');
+    Route::get('/checkout/success/{p}', [CheckoutController::class, 'success'])->name('guest.transaction.success');
 });
 
 Route::get('/', [IndexController::class, 'index'])->name('index');

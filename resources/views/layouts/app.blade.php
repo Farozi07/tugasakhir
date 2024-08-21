@@ -9,7 +9,7 @@
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link href="{{ asset('/') }}/assets/images/logo-bpsdm.png">
+    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/logo-bpsdm-sm.ico">
 
     <!-- App css -->
 
@@ -175,20 +175,14 @@
                         <div class="col-md-6">
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script> &copy; Adminto theme by <a href="">Coderthemes</a>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="text-md-end footer-links d-none d-sm-block">
-                                <a href="javascript:void(0);">About Us</a>
-                                <a href="javascript:void(0);">Help</a>
-                                <a href="javascript:void(0);">Contact Us</a>
-                            </div>
+                            </script> &copy; Badan Pengembangan Sumber Daya Manusia Provinsi
+                            Kalimantan
+                            Barat</a>
                         </div>
                     </div>
                 </div>
             </footer>
             <!-- end Footer -->
-
         </div>
 
         <!-- ============================================================== -->

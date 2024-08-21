@@ -29,19 +29,75 @@
                             <td>{{ \Carbon\Carbon::parse($p->end)->format('d-m-Y') }}</td>
                             <td>{{ ucfirst($p->transaction->status) }}</td>
                             <td>
-                                @if ($p->status == true)
-                                    <!-- Jika status true, tampilkan button bayar -->
-                                @elseif ($p->status == false)
-                                    <!-- Jika status false, tampilkan button batalkan pesanan -->
-                                    <a href="{{ route('guest.checkout.id', ['id' => $p->id]) }}"
-                                        class="btn btn-success">Bayar</a>
-                                @endif
                                 @if ($p->cancellation_requested == false && $p->transaction->status == 'pending')
+                                    <button type="button" class="btn btn-success ms-1" data-bs-toggle="modal"
+                                        data-bs-target="#bayarModal-{{ $p->id }}">
+                                        Bayar Sekarang
+                                    </button>
                                     <button type="button" class="btn btn-danger waves-effect waves-light"
-                                        data-bs-toggle="modal" data-bs-target="#con-close-modal">Batalkan Pesanan</button>
-                                    <!-- sample modal content -->
-                                    <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog"
-                                        aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#con-close-modal-{{ $p->id }}">Batalkan
+                                        Pesanan</button>
+                                    <!-- bayar Account Modal -->
+                                    <div class="modal fade" id="bayarModal-{{ $p->id }}" tabindex="-1"
+                                        aria-labelledby="bayarModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="bayarModalLabel">Pembayaran Aula</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Anda akan melakukan pembayaran booking
+                                                        <strong>{{ $p->aula->nama }}</strong> dari tanggal
+                                                        {{ \Carbon\Carbon::parse($p->start)->format('d-m-Y') }} sampai
+                                                        {{ \Carbon\Carbon::parse($p->end)->format('d-m-Y') }} dengan harga
+                                                        <strong>Rp{{ number_format($p->transaction['price'], 0, ',', '.') }}</strong>
+                                                    </p>
+                                                    <p>Apakah Anda yakin ingin melanjutkan pembayaran?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="button" class="btn btn-success" id="pay-button">
+                                                        Bayar Sekarang
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+                                        </script>
+                                        <script type="text/javascript">
+                                            document.getElementById('pay-button').onclick = function() {
+                                                // SnapToken acquired from previous step
+                                                snap.pay('{{ $p->transaction->snap_token }}', {
+                                                    // Optional
+                                                    onSuccess: function(result) {
+                                                        // /* You may add your own js here, this is just example */
+                                                        // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                                                        window.location.href =
+                                                            '{{ route('guest.transaction.success', $p->id) }}';
+
+                                                    },
+                                                    // Optional
+                                                    onPending: function(result) {
+                                                        /* You may add your own js here, this is just example */
+                                                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                                                    },
+                                                    // Optional
+                                                    onError: function(result) {
+                                                        /* You may add your own js here, this is just example */
+                                                        document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                                                    }
+                                                });
+                                            };
+                                        </script>
+                                    </div>
+                                    <!--modal content -->
+                                    <div id="con-close-modal-{{ $p->id }}" class="modal fade" tabindex="-1"
+                                        role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+                                        style="display: none;">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">

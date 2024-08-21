@@ -9,7 +9,7 @@
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('/') }}/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/logo-bpsdm-sm.ico">
 
     <!-- App css -->
 
@@ -22,18 +22,15 @@
 
 <body class="loading authentication-bg authentication-bg-pattern">
 
-    <div class="account-pages my-5">
+    <div class="account-pages my-4">
         <div class="container">
-
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6 col-xl-4">
-                    <div class="text-center">
-                        <a href="index.html">
-                            <img src="{{ asset('/') }}/assets/images/logo-dark.png" alt="" height="22"
+                    <div class="text-center mb-4">
+                        <a href="/">
+                            <img src="{{ asset('/') }}/assets/images/logo-bpsdm.png" alt="" height="70"
                                 class="mx-auto">
                         </a>
-                        <p class="text-muted mt-2 mb-4">Responsive Admin Dashboard</p>
-
                     </div>
                     <div class="card">
                         <div class="card-body p-4">

@@ -3,13 +3,13 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Tamu</title>
+    <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/favicon.ico">
+    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/logo-bpsdm-sm.ico">
 
     <!-- App css -->
 
@@ -22,16 +22,15 @@
 
 <body class="loading authentication-bg authentication-bg-pattern">
 
-    <div class="account-pages mt-5 mb-5">
+    <div class="account-pages mt-3 mb-4">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8 col-lg-6 col-xl-8">
-                    <div class="text-center">
-                        <a href="index.html">
-                            <img src="{{ asset('/') }}assets/images/logo-dark.png" alt="" height="22"
+                    <div class="text-center mb-3">
+                        <a href="/">
+                            <img src="{{ asset('/') }}assets/images/logo-bpsdm.png" alt="" height="70"
                                 class="mx-auto">
                         </a>
-                        <p class="text-muted mt-2 mb-4">Responsive Admin Dashboard</p>
                     </div>
                     <div class="card">
                         <div class="card-body p-4">
@@ -105,7 +104,7 @@
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label for="alamat" class="form-label">Alamat</label>
-                                            <textarea name="alamat" id="alamat" cols="30" rows="10"
+                                            <textarea name="alamat" id="alamat" cols="10" rows="5"
                                                 class="form-control @error('alamat') is-invalid @enderror" placeholder="Masukkan Alamat"></textarea>
                                             @error('alamat')
                                                 <span class="invalid-feedback">{{ $message }}</span>
@@ -122,15 +121,6 @@
                         </div> <!-- end card-body -->
                     </div>
                     <!-- end card -->
-
-                    <div class="row mt-3">
-                        <div class="col-12 text-center">
-                            <p class="text-muted">Already have account? <a href="pages-login.html"
-                                    class="text-dark ms-1"><b>Sign In</b></a></p>
-                        </div> <!-- end col -->
-                    </div>
-                    <!-- end row -->
-
                 </div> <!-- end col -->
             </div>
             <!-- end row -->

@@ -111,6 +111,32 @@ class AdminController extends Controller
     }
     public function storeGuest(Request $request){
         $role = Role::where('name','guest')->first();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string',
+            'no_ktp' => ['required', 'string', 'regex:/^[0-9]{16}$/'],
+            'telp' => 'required|string|min:10|max:15',
+            'alamat' => 'required|string|max:500',
+        ],[
+            'name.required' => 'Nama tidak boleh kosong.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
+
+            'email.required' => 'Email Tidak Boleh Kosong',
+            'email.unique' => 'Email Sudah Digunakan',
+
+            'password.required' => 'Password Tidak Boleh Kosong',
+
+            'no_ktp.required' => 'Nomor KTP tidak boleh kosong.',
+            'no_ktp.regex' => 'Nomor KTP harus terdiri dari 16 digit angka.',
+
+            'telp.required' => 'Nomor telepon tidak boleh kosong.',
+            'telp.min' => 'Nomor telepon minimal 10 karakter.',
+            'telp.max' => 'Nomor telepon tidak boleh lebih dari 15 karakter.',
+
+            'alamat.required' => 'Alamat tidak boleh kosong.',
+        ]);
+        return $request;
 
         $user = User::create([
             'name' => $request->name,
@@ -136,10 +162,12 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
+            'password' => 'required',
             'nama_bidang' => 'required|string',
         ],[
             'email' => 'Kolom E-mail belum diisi',
             'email.unique' => 'Email ini sudah digunakan, silakan gunakan email lain.',
+            'password.required' => 'Password Tidak Boleh Kosong',
             'name' => 'Kolom nama belum diisi',
             'nama_bidang' => 'Kolom nama bidang belum diisi',
         ]);
@@ -163,6 +191,38 @@ class AdminController extends Controller
         return view ('admin.create_booking_guest',['data'=>$data],['aula'=>$aula]);
     }
     public function storeBookingGuest(Request $request){
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'start' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
+            'aula' => 'required|in:1,2,3',
+            'keperluan' => 'required'
+        ],[
+            'name' => 'Nama Tidak Boleh Kosong',
+            'start.required' => 'Tanggal Mulai Tidak Boleh Kosong.',
+            'end.required' => 'Tanggal Berakhir Tidak Boleh Kosong.',
+            'aula.required' => 'Aula Tidak Boleh Kosong.',
+            'keperluan.required' => 'Keperluan Tidak Boleh Kosong.',
+        ]);
+
+        $start = $validatedData['start'];
+        $end = $validatedData['end'];
+        $aula_id = $validatedData['aula'];
+        $conflictBooking = Booking::where('status', true)
+        ->where('aula_id', $aula_id)
+        ->where(function ($query) use ($start, $end) {
+            $query->whereBetween('start', [$start, $end])
+                ->orWhereBetween('end', [$start, $end])
+                ->orWhere(function ($query) use ($start, $end) {
+                    $query->where('start', '<=', $start)
+                        ->where('end', '>=', $end);
+                });
+        })
+        ->first();
+
+        if ($conflictBooking) {
+            return redirect()->back()->with('error','Aula sudah dipesan pada tanggal tersebut');
+        }
         $booking=Booking::create([
             'user_id'=>$request->name,
             'aula_id' => $request->aula,
@@ -180,6 +240,49 @@ class AdminController extends Controller
 
     }
     public function storeBookingEmployee(Request $request){
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'start' => ['required', 'date', function ($attribute, $value, $fail) {
+                if (Carbon::parse($value)->lt(Carbon::today())) {
+                    $fail('Tanggal Mulai tidak boleh kurang dari hari ini.');
+                }
+            }],
+            'end' => ['required', 'date', function ($attribute, $value, $fail) {
+                if (Carbon::parse($value)->lt(Carbon::today())) {
+                    $fail('Tanggal Berakhir tidak boleh kurang dari hari ini.');
+                }
+            }, 'after_or_equal:start'],
+            'aula' => 'required|in:1,2,3',
+            'keperluan' => 'required'
+        ],[
+            'name.required' => 'Nama Tidak Boleh Kosong',
+            'start.required' => 'Tanggal Mulai Tidak Boleh Kosong.',
+            'end.required' => 'Tanggal Berakhir Tidak Boleh Kosong.',
+            'end.after_or_equal' => 'Tanggal Berakhir harus sama dengan atau setelah Tanggal Mulai.',
+            'aula.required' => 'Aula Tidak Boleh Kosong.',
+            'keperluan.required' => 'Keperluan Tidak Boleh Kosong.',
+        ]);
+
+        $start = $validatedData['start'];
+        $end = $validatedData['end'];
+        $aula_id = $validatedData['aula'];
+
+        $conflictBooking = Booking::where('status', true)
+            ->where('aula_id', $aula_id)
+            ->where(function ($query) use ($start, $end) {
+                $query->whereBetween('start', [$start, $end])
+                    ->orWhereBetween('end', [$start, $end])
+                    ->orWhere(function ($query) use ($start, $end) {
+                        $query->where('start', '<=', $start)
+                            ->where('end', '>=', $end);
+                    });
+            })
+            ->first();
+
+        if ($conflictBooking) {
+            return redirect()->back()->with('error','Aula sudah dipesan pada tanggal tersebut');
+        }
+
         Booking::create([
             'user_id'=>$request->name,
             'aula_id' => $request->aula,
@@ -189,6 +292,10 @@ class AdminController extends Controller
             'status' => true,
         ]);
         return redirect()->route('admin.create.booking.employee')->with('success', 'Kegiatan Berhasil di Tambahkan.');
+    }
+    public function deleteBookingEmployee($id){
+        Booking::where('id',$id)->forceDelete();
+        return redirect()->back()->with('success','Berhasil Menghapus Kegiatan');
     }
 
     public function daftarAkun(){

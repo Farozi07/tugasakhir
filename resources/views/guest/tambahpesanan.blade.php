@@ -22,16 +22,16 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Start</label>
-                            <input type="text" id="start-humanfd-datepicker" class="form-control" placeholder=""
+                            <label class="form-label">Mulai</label>
+                            <input type="text" id="disable-datepicker-start" class="form-control" placeholder=""
                                 name="start">
                             @error('start')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">End</label>
-                            <input type="text" id="end-humanfd-datepicker" class="form-control" placeholder=""
+                            <label class="form-label">Berakhir</label>
+                            <input type="text" id="disable-datepicker-end" class="form-control" placeholder=""
                                 name="end">
                             @error('end')
                                 <div class="alert alert-danger">{{ $message }}</div>

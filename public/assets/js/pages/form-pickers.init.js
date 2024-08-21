@@ -28,13 +28,52 @@
             }),
             t("#disable-datepicker").flatpickr({
                 onReady: function () {
-                    this.jumpToDate("2025-01");
+                    var today = new Date();
+                    this.jumpToDate(today);
                 },
                 disable: [
-                    "2025-01-10",
-                    "2025-01-21",
-                    "2025-01-30",
-                    new Date(2025, 4, 9),
+                    function (date) {
+                        // Mendapatkan hari ini tanpa waktu (hanya tanggal)
+                        var today = new Date();
+                        today.setHours(0, 0, 0, 0); // Mengatur waktu ke 00:00:00
+
+                        // Menonaktifkan semua tanggal sebelum hari ini (yesterday)
+                        return date < today;
+                    },
+                ],
+                dateFormat: "d-m-Y",
+            }),
+            t("#disable-datepicker-start").flatpickr({
+                onReady: function () {
+                    var today = new Date();
+                    this.jumpToDate(today);
+                },
+                disable: [
+                    function (date) {
+                        // Mendapatkan hari ini tanpa waktu (hanya tanggal)
+                        var today = new Date();
+                        today.setHours(0, 0, 0, 0); // Mengatur waktu ke 00:00:00
+
+                        // Menonaktifkan semua tanggal sebelum hari ini (yesterday)
+                        return date < today;
+                    },
+                ],
+                dateFormat: "Y-m-d",
+            }),
+            t("#disable-datepicker-end").flatpickr({
+                onReady: function () {
+                    var today = new Date();
+                    this.jumpToDate(today);
+                },
+                disable: [
+                    function (date) {
+                        // Mendapatkan hari ini tanpa waktu (hanya tanggal)
+                        var today = new Date();
+                        today.setHours(0, 0, 0, 0); // Mengatur waktu ke 00:00:00
+
+                        // Menonaktifkan semua tanggal sebelum hari ini (yesterday)
+                        return date < today;
+                    },
                 ],
                 dateFormat: "Y-m-d",
             }),

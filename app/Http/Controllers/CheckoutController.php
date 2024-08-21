@@ -20,9 +20,10 @@ class CheckoutController extends Controller
             return redirect()->route('guest.fillData')->with('info', 'Anda perlu mengisi data profil terlebih dahulu.');
         }
         $bookings = Booking::where('user_id', $user)
+        ->orderBy('id', 'asc')
         ->with('transaction')
-        ->orderBy('created_at', 'desc')
         ->get();
+        // return $bookings;
         return view('guest.list',['bookings'=>$bookings]);
     }
     public function requestCancellation(Request $request, $id){
@@ -49,19 +50,19 @@ class CheckoutController extends Controller
         $notificationController->send(new Request(['message' => $message]));
         return redirect()->back()->with('success', 'Permintaan pembatalan telah dikirim ke admin.');
     }
-    public function listshow($id){
-        $bookings = Booking::with('transaction')
-        ->where('id',$id)->first();
-        // $transaction=Transaction::where('booking_id',$bookings->id);
-        $days = Carbon::parse($bookings->start)->diffInDays(Carbon::parse($bookings->end))+1;;
-        $pricePerDay = $bookings->aula->price;
-        // Menghitung total biaya
-        $totalCost = $days * $pricePerDay;
-        // return $transaction;
-        return view('guest.checkout', compact('bookings','totalCost','days'));
-    }
-    public function success(Booking $bookings){
-        $transaction = Transaction::where('booking_id', $bookings->id)->first();
+    // public function listshow($id){
+    //     $bookings = Booking::with('transaction')
+    //     ->where('id',$id)->first();
+    //     // $transaction=Transaction::where('booking_id',$bookings->id);
+    //     $days = Carbon::parse($bookings->start)->diffInDays(Carbon::parse($bookings->end))+1;;
+    //     $pricePerDay = $bookings->aula->price;
+    //     // Menghitung total biaya
+    //     $totalCost = $days * $pricePerDay;
+    //     // return $transaction;
+    //     return view('guest.checkout', compact('bookings','totalCost','days'));
+    // }
+    public function success(Booking $p){
+        $transaction = Transaction::where('booking_id', $p->id)->first();
 
         // Periksa apakah transaksi ditemukan
         if ($transaction) {
@@ -69,8 +70,8 @@ class CheckoutController extends Controller
             $transaction->status = 'success';
             $transaction->save();
         }
-        $bookings->status = true;
-        $bookings->save();
+        $p->status = true;
+        $p->save();
         return view('guest.success');
 
     }

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
     <!-- App favicon -->
-    <link href="{{ asset('/') }}/assets/images/logo-bpsdm.png">
+    <link rel="shortcut icon" href="{{ asset('/') }}assets/images/logo-bpsdm-sm.ico">
 
     <!-- App css -->
 
@@ -222,17 +222,13 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div><!-- end col -->
-
                     </div>
-
                     <div class="card">
                         <div class="card-body">
                             <div class="col-md-11 col-xl-11 mx-auto" id='calendar'></div>
                         </div>
                     </div>
-                    @yield('content')
                     <!-- Modal -->
                     <div class="modal fade" id="yearModal" tabindex="-1" aria-labelledby="yearModalLabel"
                         aria-hidden="true">
@@ -273,14 +269,9 @@
                         <div class="col-md-6">
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script> &copy; Adminto theme by <a href="">Coderthemes</a>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="text-md-end footer-links d-none d-sm-block">
-                                <a href="javascript:void(0);">About Us</a>
-                                <a href="javascript:void(0);">Help</a>
-                                <a href="javascript:void(0);">Contact Us</a>
-                            </div>
+                            </script> &copy; Badan Pengembangan Sumber Daya Manusia Provinsi
+                            Kalimantan
+                            Barat</a>
                         </div>
                     </div>
                 </div>

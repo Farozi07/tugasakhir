@@ -53,7 +53,7 @@ class GuestController extends Controller
                     'start' => $booking->start,
                     'end' => Carbon::parse($booking->end),
                     'keperluan'=>$booking->keperluan,
-                    'className'=>['bg-'. $booking->aula->category]
+                    'className'=>['bg-'. $booking->aula->category],
                 ];
             });
             // return $events;
@@ -64,7 +64,11 @@ class GuestController extends Controller
             // return $bookingsUnpaid;
         return view('guest.dashboard',['events'=>$events,'bookingsPaid'=>$bookingsPaid,'bookingsUnpaid'=>$bookingsUnpaid]);
     }
-    // Menampilkan halaman untuk mengisi data guest
+
+    public function info(){
+        return view('guest.informasi');
+    }
+
     public function fillData()
     {
         $userId = Auth::user()->id;
@@ -86,15 +90,38 @@ class GuestController extends Controller
         $guest = Guest::where('user_id', $userId)->first();
 
         if (!$guest) {
-            return redirect()->route('guest.fillData')->with('error', 'Data guest tidak ditemukan.');
+            return redirect()->route('guest.fillData')->with('error', 'Data tidak ditemukan.');
         }
-        // Validasi input
         $request->validate([
-            'no_ktp' => 'required|string',
-            'telp' => 'required|string',
-            'alamat' => 'required|string',
-        ]);
+            'name' => 'required|string|max:255',
+            'password' => 'nullable|string',
+            'no_ktp' => ['required', 'string', 'regex:/^[0-9]{16}$/'],
+            'telp' => 'required|string|min:10|max:15',
+            'alamat' => 'required|string|max:500',
+        ],[
+            'name.required' => 'Nama tidak boleh kosong.',
+            'name.max' => 'Nama tidak boleh lebih dari 255 karakter.',
 
+            'no_ktp.required' => 'Nomor KTP tidak boleh kosong.',
+            'no_ktp.regex' => 'Nomor KTP harus terdiri dari 16 digit angka.',
+
+            'telp.required' => 'Nomor telepon tidak boleh kosong.',
+            'telp.min' => 'Nomor telepon minimal 10 karakter.',
+            'telp.max' => 'Nomor telepon tidak boleh lebih dari 15 karakter.',
+
+            'alamat.required' => 'Alamat tidak boleh kosong.',
+        ]);
+        $user=User::where('id',$userId)->first();
+        if ($request->name != $user->name) {
+            $user->name = $request->name;
+        }
+        if ($request->email != $user->email) {
+            $user->email = $request->email;
+        }
+        if (isset($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
         // Update data guest
         $guest->no_ktp = $request->input('no_ktp');
         $guest->telp = $request->input('telp');
@@ -129,13 +156,17 @@ class GuestController extends Controller
             'end' => 'required|date|after_or_equal:start',
             'aula' => 'required|in:1,2,3',
             'keperluan' => 'required'
+        ],[
+            'start.required' => 'Tanggal Mulai Tidak Boleh Kosong.',
+            'end.required' => 'Tanggal Berakhir Tidak Boleh Kosong. Jika Hanya Memesan 1 hari Samakan Dengan Tanggal Mulai',
+            'aula.required' => 'Aula Tidak Boleh Kosong.',
+            'keperluan.required' => 'Keperluan Tidak Boleh Kosong.',
         ]);
 
         $start = $validatedData['start'];
         $end = $validatedData['end'];
         $aula_id = $validatedData['aula'];
 
-        // Cek apakah ada booking yang bertabrakan dengan status true
         $conflictBooking = Booking::where('status', true)
             ->where('aula_id', $aula_id)
             ->where(function ($query) use ($start, $end) {
@@ -150,7 +181,6 @@ class GuestController extends Controller
 
         if ($conflictBooking) {
             return redirect()->back()->with('error','Aula sudah dipesan pada tanggal tersebut');
-            // return response()->json(['error' => 'Aula sudah dipesan pada tanggal tersebut.'], 422);
         }
 
         $user = Auth::user()->id;
