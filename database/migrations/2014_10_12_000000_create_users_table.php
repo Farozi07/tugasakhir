@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('google_id')->nullable()->unique();
             $table->string('github_id')->nullable()->unique();
-            $table->string('foto')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->foreignId('role_id')->constrained()->onDelete('cascade');

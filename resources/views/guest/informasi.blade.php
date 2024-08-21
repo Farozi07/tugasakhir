@@ -11,10 +11,12 @@
                     <div id="carouselAulaBhinneka" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="path_to_your_image1.jpg" class="d-block w-100 slider-img" alt="Aula Bhinneka">
+                                <img src="{{ asset('/') }}assets/images/Fotoaula/aulaBTI.jpg"
+                                    class="d-block w-100 slider-img" alt="Aula Bhinneka">
                             </div>
                             <div class="carousel-item">
-                                <img src="path_to_your_image2.jpg" class="d-block w-100 slider-img" alt="Aula Bhinneka">
+                                <img src="{{ asset('/') }}assets/images/Fotoaula/aulaBTI2.jpg"
+                                    class="d-block w-100 slider-img" alt="Aula Bhinneka">
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselAulaBhinneka"
@@ -46,10 +48,12 @@
                     <div id="carouselAulaGaruda" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="path_to_your_image3.jpg" class="d-block w-100 slider-img" alt="Aula Garuda">
+                                <img src="{{ asset('/') }}assets/images/Fotoaula/aulaGaruda.jpg"
+                                    class="d-block w-100 slider-img" alt="Aula Garuda">
                             </div>
                             <div class="carousel-item">
-                                <img src="path_to_your_image4.jpg" class="d-block w-100 slider-img" alt="Aula Garuda">
+                                <img src="{{ asset('/') }}assets/images/Fotoaula/aulaGaruda4.jpg"
+                                    class="d-block w-100 slider-img" alt="Aula Garuda">
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselAulaGaruda"
@@ -81,10 +85,12 @@
                     <div id="carouselAulaAkcaya" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="path_to_your_image5.jpg" class="d-block w-100 slider-img" alt="Aula Akcaya">
+                                <img src="{{ asset('/') }}assets/images/Fotoaula/aulaAkcaya.jpg"
+                                    class="d-block w-100 slider-img" alt="Aula Akcaya">
                             </div>
                             <div class="carousel-item">
-                                <img src="path_to_your_image6.jpg" class="d-block w-100 slider-img" alt="Aula Akcaya">
+                                <img src="{{ asset('/') }}assets/images/Fotoaula/aulaAkcaya2.jpg"
+                                    class="d-block w-100 slider-img" alt="Aula Akcaya">
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselAulaAkcaya"

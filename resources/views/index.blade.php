@@ -156,20 +156,29 @@
                                         class="active"></li>
                                     <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
                                     <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"></li>
+                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"></li>
                                 </ol>
                                 <div class="carousel-inner" role="listbox">
                                     <div class="carousel-item active">
                                         <img class="d-block img-fluid"
-                                            src="{{ asset('/') }}assets/images/small/img-3.jpg" alt="First slide">
+                                            src="{{ asset('/') }}assets/images/Fotoaula/aulaBTI6.jpg"
+                                            alt="First slide">
                                     </div>
                                     <div class="carousel-item">
                                         <img class="d-block img-fluid"
-                                            src="{{ asset('/') }}assets/images/small/img-2.jpg"
+                                            src="{{ asset('/') }}assets/images/Fotoaula/aulaGaruda.jpg"
                                             alt="Second slide">
                                     </div>
                                     <div class="carousel-item">
                                         <img class="d-block img-fluid"
-                                            src="{{ asset('/') }}assets/images/small/img-1.jpg" alt="Third slide">
+                                            src="{{ asset('/') }}assets/images/Fotoaula/aulaGaruda5.jpg"
+                                            alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block img-fluid"
+                                            src="{{ asset('/') }}assets/images/Fotoaula/aulaBTI7.jpg"
+                                            alt="Third slide">
                                     </div>
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
@@ -262,7 +271,6 @@
 
                     countdown();
                 });
-            </script>
             </script>
 
             <script>
