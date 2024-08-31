@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Employee;
 use App\Models\Guest;
 use App\Models\Booking;
+use App\Models\Transaction;
 use Hash;
 use Carbon\Carbon;
 use Auth;
@@ -231,6 +232,16 @@ class AdminController extends Controller
             'keperluan' => $request->keperluan,
             'status' => true,
         ]);
+        $days = Carbon::parse($booking->start)->diffInDays(Carbon::parse($booking->end))+1;;
+        $pricePerDay = $booking->aula->price;
+        // Menghitung total biaya
+        $totalCost = $days * $pricePerDay;
+        $transaction=Transaction::create([
+            'booking_id'=>$booking->id,
+            'price'=>$totalCost,
+            'status'=>'success',
+        ]);
+        $transaction->save();
         return redirect()->route('admin.create.booking.guest')->with('success', 'Kegiatan Berhasil Ditambahkan.');
     }
     public function createBookingEmployee(){
@@ -343,7 +354,6 @@ class AdminController extends Controller
     }
     public function export(Request $request)
     {
-
         $year = $request->input('year', date('Y'));
         return Excel::download(new BookingsExport($year), 'Arsip Pemakaian Aula Tahun ' . $year . '.xlsx');
     }

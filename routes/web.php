@@ -10,6 +10,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Auth\GitHubController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\PictureController;
 use App\Models\Aula;
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,10 @@ Route::prefix('admin')->middleware(['auth','role:admin'])->group(function(){
     Route::get('/list/akun', [AdminController::class, 'daftarAkun'])->name('admin.daftar.akun');
     Route::post('/list/edit/akun', [AdminController::class, 'editAkun'])->name('admin.edit.akun');
     Route::delete('/list/hapus/akun/{id}', [AdminController::class, 'deleteAkun'])->name('admin.hapus.akun');
+    Route::get('/pictures', [PictureController::class, 'index'])->name('admin.pictures');
+    Route::post('/pictures/upload', [PictureController::class, 'store'])->name('admin.pictures.store');
+    Route::put('/pictures/update/{picture}', [PictureController::class, 'update'])->name('admin.pictures.update');
+    Route::delete('/pictures/delete/{picture}', [PictureController::class, 'destroy'])->name('admin.pictures.destroy');
 
     // Route::get('/list/guest',[AdminController::class,'listBookingGuest'])->name('admin.list.booking.guest');
     Route::delete('/list/guest/{id}',[AdminController::class,'listBookingDelete'])->name('admin.list.booking.delete');

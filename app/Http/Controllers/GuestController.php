@@ -7,6 +7,7 @@ use App\Models\Role;
 use App\Models\Guest;
 use App\Models\Booking;
 use App\Models\Transaction;
+use App\Models\Picture;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -66,7 +67,30 @@ class GuestController extends Controller
     }
 
     public function info(){
-        return view('guest.informasi');
+        $aulas = ['Aula Bhinneka Tunggal Ika', 'Aula Garuda', 'Aula Akcaya'];
+        $pictures = Picture::whereIn('nama_aula', $aulas)->get()->groupBy('nama_aula');
+        $details = [
+            'Aula Bhinneka Tunggal Ika' => [
+                'capacity' => '100 orang',
+                'price' => 'Rp 3.000.000 per hari (maks. 8 jam)',
+                'facilities' => 'Kursi rangka stainless/jok busa, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
+                'extra_cost' => 'Rp 250.000 per jam untuk setiap kelebihan waktu.',
+            ],
+            'Aula Garuda' => [
+                'capacity' => '150 orang',
+                'price' => 'Rp 4.000.000 per hari (maks. 8 jam)',
+                'facilities' => 'Kursi rangka stainless, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
+                'extra_cost' => 'Rp 300.000 per jam untuk setiap kelebihan waktu.',
+            ],
+            'Aula Akcaya' => [
+                'capacity' => '200 orang',
+                'price' => 'Rp 5.000.000 per hari (maks. 8 jam)',
+                'facilities' => 'Kursi rangka stainless, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
+                'extra_cost' => 'Rp 350.000 per jam untuk setiap kelebihan waktu.',
+            ]
+        ];
+
+        return view('guest.informasi', compact('pictures', 'details', 'aulas'));
     }
 
     public function fillData()
@@ -152,7 +176,7 @@ class GuestController extends Controller
     public function  storeBooking(Request $request){
         // Validasi input
         $validatedData = $request->validate([
-            'start' => 'required|date',
+            'start' => 'required|date|after_or_equal:today',
             'end' => 'required|date|after_or_equal:start',
             'aula' => 'required|in:1,2,3',
             'keperluan' => 'required'

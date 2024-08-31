@@ -24,7 +24,7 @@
                             <td>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal-{{ $p->id }}">
-                                    Delete Account
+                                    Hapus Akun
                                 </button>
                                 <button type="button" class="btn btn-warning ms-1" data-bs-toggle="modal"
                                     data-bs-target="#editModal-{{ $p->id }}">

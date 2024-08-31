@@ -119,8 +119,8 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary waves-effect"
                                                             data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-danger">Submit
-                                                            Request</button>
+                                                        <button type="submit" class="btn btn-danger">Kirim
+                                                            Permintann</button>
                                                     </div>
                                                 </form>
                                             </div>

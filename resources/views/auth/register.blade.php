@@ -115,9 +115,7 @@
                                 <div class="mb-3 text-center d-grid">
                                     <button class="btn btn-primary" type="submit"> Sign Up </button>
                                 </div>
-
                             </form>
-
                         </div> <!-- end card-body -->
                     </div>
                     <!-- end card -->

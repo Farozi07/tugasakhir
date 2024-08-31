@@ -130,10 +130,8 @@
 
         <div class="content-page">
             <div class="content">
-
                 <!-- Start Content-->
                 <div class="container-fluid">
-
                     <!-- start page title -->
                     <div class="row">
                         <div class="col-12">
@@ -145,41 +143,25 @@
                     </div>
                 </div>
                 <!-- end page title -->
-
                 <div class="row">
-
                     <div class="col-xl-6 col-md-6">
                         <div class="card">
+                            <!-- Carousel -->
                             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                                 <ol class="carousel-indicators">
-                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                                        class="active"></li>
-                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"></li>
-                                    <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4"></li>
+                                    @foreach ($pictures as $index => $picture)
+                                        <li data-bs-target="#carouselExampleIndicators"
+                                            data-bs-slide-to="{{ $index }}"
+                                            class="{{ $index == 0 ? 'active' : '' }}"></li>
+                                    @endforeach
                                 </ol>
-                                <div class="carousel-inner" role="listbox">
-                                    <div class="carousel-item active">
-                                        <img class="d-block img-fluid"
-                                            src="{{ asset('/') }}assets/images/Fotoaula/aulaBTI6.jpg"
-                                            alt="First slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block img-fluid"
-                                            src="{{ asset('/') }}assets/images/Fotoaula/aulaGaruda.jpg"
-                                            alt="Second slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block img-fluid"
-                                            src="{{ asset('/') }}assets/images/Fotoaula/aulaGaruda5.jpg"
-                                            alt="Second slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block img-fluid"
-                                            src="{{ asset('/') }}assets/images/Fotoaula/aulaBTI7.jpg"
-                                            alt="Third slide">
-                                    </div>
+                                <div class="carousel-inner">
+                                    @foreach ($pictures as $index => $picture)
+                                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                            <img class="d-block w-100" src="{{ asset('/' . $picture->image_path) }}"
+                                                alt="{{ $picture->nama_aula }}">
+                                        </div>
+                                    @endforeach
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
                                     data-bs-slide="prev">
@@ -194,12 +176,9 @@
                             </div>
                         </div>
                     </div><!-- end col -->
-
                     <div class="col-xl-6 col-md-6">
-
                         <div id="calendar"></div>
                     </div><!-- end col -->
-
                     <!-- end row -->
                     <!-- Standard modal content -->
                     <div id="standard-modal" class="modal fade" tabindex="-1" role="dialog"
@@ -225,9 +204,7 @@
                         </div><!-- /.modal-dialog -->
                     </div>
                     <!-- /.modal -->
-
                 </div> <!-- container -->
-
             </div> <!-- content -->
 
             <!-- Footer Start -->
@@ -242,7 +219,7 @@
                             Barat</a>
                         </div>
                         <div class="col-md-6">
-                            <div class="text-md-end footer-links d-none d-sm-block">
+                            <div class="text-md-end d-none d-sm-block">
                                 <h5>Total Pengunjung Hari Ini: <span id="visitorCount"></span></h5>
                             </div>
                         </div>
@@ -268,11 +245,9 @@
                             setTimeout(countdown, stepTime);
                         }
                     }
-
                     countdown();
                 });
             </script>
-
             <script>
                 function formatDate(date) {
                     var d = new Date(date);
@@ -281,7 +256,6 @@
                     var year = d.getFullYear();
                     return `${day}-${month}-${year}`;
                 }
-
                 document.addEventListener('DOMContentLoaded', function() {
                     var calendarEl = document.getElementById('calendar');
                     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -325,8 +299,6 @@
                 });
             </script>
         </div>
-
-
         <!-- ============================================================== -->
         <!-- End Page content -->
         <!-- ============================================================== -->

@@ -289,7 +289,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p><strong>Title:</strong> <span id="modalTitle"></span></p>
+                            <p><strong>Nama Aula:</strong> <span id="modalTitle"></span></p>
                             <p><strong>Mulai:</strong> <span id="modalStart"></span></p>
                             <p><strong>Berakhir:</strong> <span id="modalEnd"></span></p>
                             <p><strong>Keperluan:</strong> <span id="modalKeperluan"></span></p>
