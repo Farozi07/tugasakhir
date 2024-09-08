@@ -67,30 +67,32 @@ class GuestController extends Controller
     }
 
     public function info(){
-        $aulas = ['Aula Bhinneka Tunggal Ika', 'Aula Garuda', 'Aula Akcaya'];
-        $pictures = Picture::whereIn('nama_aula', $aulas)->get()->groupBy('nama_aula');
-        $details = [
-            'Aula Bhinneka Tunggal Ika' => [
-                'capacity' => '100 orang',
-                'price' => 'Rp 3.000.000 per hari (maks. 8 jam)',
-                'facilities' => 'Kursi rangka stainless/jok busa, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
-                'extra_cost' => 'Rp 250.000 per jam untuk setiap kelebihan waktu.',
-            ],
-            'Aula Garuda' => [
-                'capacity' => '150 orang',
-                'price' => 'Rp 4.000.000 per hari (maks. 8 jam)',
-                'facilities' => 'Kursi rangka stainless, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
-                'extra_cost' => 'Rp 300.000 per jam untuk setiap kelebihan waktu.',
-            ],
-            'Aula Akcaya' => [
-                'capacity' => '200 orang',
-                'price' => 'Rp 5.000.000 per hari (maks. 8 jam)',
-                'facilities' => 'Kursi rangka stainless, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
-                'extra_cost' => 'Rp 350.000 per jam untuk setiap kelebihan waktu.',
-            ]
-        ];
+         // Ambil semua aula dengan gambar terkait
+    $aulas = Aula::with('pictures')->whereIn('id', [1, 2, 3])->get();
 
-        return view('guest.informasi', compact('pictures', 'details', 'aulas'));
+    // Detail dari masing-masing aula
+    $details = [
+        'Aula Bhinneka Tunggal Ika' => [
+            'capacity' => '100 orang',
+            'price' => 'Rp 3.000.000 per hari (maks. 8 jam)',
+            'facilities' => 'Kursi rangka stainless/jok busa, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
+            'extra_cost' => 'Rp 250.000 per jam untuk setiap kelebihan waktu.',
+        ],
+        'Aula Garuda' => [
+            'capacity' => '150 orang',
+            'price' => 'Rp 3.000.000 per hari (maks. 8 jam)',
+            'facilities' => 'Kursi rangka stainless, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
+            'extra_cost' => 'Rp 300.000 per jam untuk setiap kelebihan waktu.',
+        ],
+        'Aula Akcaya' => [
+            'capacity' => '200 orang',
+            'price' => 'Rp 2.250.000 per hari (maks. 8 jam)',
+            'facilities' => 'Kursi rangka stainless, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
+            'extra_cost' => 'Rp 350.000 per jam untuk setiap kelebihan waktu.',
+        ]
+    ];
+
+    return view('guest.informasi', compact('aulas', 'details'));
     }
 
     public function fillData()

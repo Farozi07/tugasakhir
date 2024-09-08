@@ -137,7 +137,7 @@ class AdminController extends Controller
 
             'alamat.required' => 'Alamat tidak boleh kosong.',
         ]);
-        return $request;
+        // return $request;
 
         $user = User::create([
             'name' => $request->name,

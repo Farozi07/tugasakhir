@@ -9,4 +9,9 @@ class Picture extends Model
 {
     protected $guarded = [] ;
     use HasFactory;
+
+    public function aula()
+    {
+        return $this->belongsTo(Aula::class);
+    }
 }

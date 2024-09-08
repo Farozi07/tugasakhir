@@ -26,7 +26,7 @@ class AulaSeeder extends Seeder
         Aula::create(
             [
                 'nama' => 'Aula Garuda',
-                'price' => '2000000',
+                'price' => '3000000',
                 'deskripsi' => '100 S.D 150 Orang',
                 'category' => 'warning',
             ]
@@ -35,7 +35,7 @@ class AulaSeeder extends Seeder
         Aula::create(
             [
                 'nama' => 'Aula Akcaya',
-                'price' => '1000000',
+                'price' => '2250000',
                 'deskripsi' => '40 Orang',
                 'category' => 'success',
             ]

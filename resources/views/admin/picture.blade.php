@@ -4,6 +4,7 @@
     <div class="container">
         <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addModal">Tambah Gambar</button>
 
+
         <table id="responsive-datatable" class="table table-bordered">
             <thead>
                 <tr>
@@ -17,8 +18,9 @@
                 @foreach ($pictures as $picture)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $picture->nama_aula }}</td>
-                        <td><img src="{{ asset($picture->image_path) }}" alt="{{ $picture->nama_aula }}" width="250"></td>
+                        <td>{{ $picture->aula->nama }}</td>
+                        <td><img src="{{ asset($picture->image_path) }}" alt="{{ $picture->nama_aula }}" width="250">
+                        </td>
                         <td>
                             <button class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#editModal{{ $picture->id }}">Edit</button>
@@ -43,18 +45,18 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="mb-3">
-                                            <label for="nama_aula" class="form-label">Nama Aula</label>
-                                            <select class="form-select" id="nama_aula" name="nama_aula">
-                                                <option value="Aula Bhinneka Tunggal Ika"
-                                                    {{ $picture->nama_aula == 'Aula Bhinneka Tunggal Ika' ? 'selected' : '' }}>
+                                            <label class="form-label">Pilih Aula</label> <br />
+                                            <select class="form-select" id="aula" name="aula">
+                                                <option value="{{ $picture->aula_id }}"
+                                                    {{ $picture->aula_id == '1' ? 'selected' : '' }}>
                                                     Aula Bhinneka Tunggal Ika
                                                 </option>
-                                                <option value="Aula Garuda"
-                                                    {{ $picture->nama_aula == 'Aula Garuda' ? 'selected' : '' }}>
+                                                <option value="{{ $picture->aula_id }}"
+                                                    {{ $picture->aula_id == '2' ? 'selected' : '' }}>
                                                     Aula Garuda
                                                 </option>
-                                                <option value="Aula Akcaya"
-                                                    {{ $picture->nama_aula == 'Aula Akcaya' ? 'selected' : '' }}>
+                                                <option value="{{ $picture->aula_id }}"
+                                                    {{ $picture->aula_id == '3' ? 'selected' : '' }}>
                                                     Aula Akcaya
                                                 </option>
                                             </select>
@@ -119,18 +121,24 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="example-select" class="form-label">Nama Aula</label>
-                            <select class="form-select" id="example-select" name="nama_aula">
-                                <option selected disabled>Pilih Aula</option>
-                                <option value="Aula Bhinneka Tunggal Ika">Aula Bhinneka Tunggal Ika</option>
-                                <option value="Aula Garuda">Aula Garuda</option>
-                                <option value="Aula Akcaya">Aula Akcaya</option>
+                            <label class="form-label">Pilih Aula</label> <br />
+                            <select id="nama_aula" name="aula" class="form-select" required>
+                                <option value="" selected disabled>Pilih Aula</option>
+                                @foreach ($aula as $b)
+                                    <option value="{{ $b->id }}">{{ $b->nama }}</option>
+                                @endforeach
                             </select>
+                            @if ($errors->has('aula'))
+                                <div class="text-danger">{{ $errors->first('aula') }}</div>
+                            @endif
                         </div>
                         <div class="mb-3">
                             <label for="image" class="form-label">Gambar</label>
                             <input type="file" class="form-control" id="image" name="image"
-                                accept="image/png, image/jpeg">
+                                accept="image/png, image/jpeg" required>
+                            @if ($errors->has('image'))
+                                <div class="text-danger">{{ $errors->first('image') }}</div>
+                            @endif
                         </div>
                     </div>
                     <div class="modal-footer">

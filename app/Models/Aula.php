@@ -14,4 +14,8 @@ class Aula extends Model
     {
         return $this->hasMany(Booking::class);
     }
+    public function pictures()
+    {
+        return $this->hasMany(Picture::class);
+    }
 }

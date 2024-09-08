@@ -7,33 +7,33 @@
         <div class="row">
             @foreach ($aulas as $aula)
                 @php
-                    $images = $pictures->get($aula, []);
-                    $detail = $details[$aula] ?? [];
+                    $images = $aula->pictures;
+                    $detail = $details[$aula->nama] ?? [];
                 @endphp
                 <div class="col-md-4">
                     <div class="card">
-                        <div id="carousel{{ Str::slug($aula) }}" class="carousel slide" data-bs-ride="carousel">
+                        <div id="carousel{{ Str::slug($aula->nama) }}" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 @foreach ($images as $index => $image)
                                     <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                                         <img src="{{ asset('/' . $image->image_path) }}" class="d-block w-100 slider-img"
-                                            alt="{{ $aula }}">
+                                            alt="{{ $aula->nama }}">
                                     </div>
                                 @endforeach
                             </div>
                             <button class="carousel-control-prev" type="button"
-                                data-bs-target="#carousel{{ Str::slug($aula) }}" data-bs-slide="prev">
+                                data-bs-target="#carousel{{ Str::slug($aula->nama) }}" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
                             <button class="carousel-control-next" type="button"
-                                data-bs-target="#carousel{{ Str::slug($aula) }}" data-bs-slide="next">
+                                data-bs-target="#carousel{{ Str::slug($aula->nama) }}" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ $aula }}</h5>
+                            <h5 class="card-title">{{ $aula->nama }}</h5>
                             <p class="card-text">Kapasitas: {{ $detail['capacity'] ?? 'N/A' }}</p>
                             <p class="card-text">Harga: {{ $detail['price'] ?? 'N/A' }}</p>
                             <p class="card-text">Fasilitas: {{ $detail['facilities'] ?? 'N/A' }}</p>
@@ -43,9 +43,6 @@
                     </div>
                 </div>
             @endforeach
+
         </div>
-        <div class="text-center mb-3">
-            <a href="{{ route('guest.create.booking') }}" class="btn btn-primary btn-lg">Pesan Sekarang</a>
-        </div>
-    </div>
-@endsection
+    @endsection

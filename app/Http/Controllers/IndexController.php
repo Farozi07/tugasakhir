@@ -5,6 +5,7 @@ use App\Models\Booking;
 use Carbon\Carbon;
 use App\Models\Visitor;
 use App\Models\Picture;
+use App\Models\Aula;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -71,8 +72,8 @@ class IndexController extends Controller
         // Menghitung total pengunjung hari ini
         $totalVisitorsToday = Visitor::whereDate('date', $today)->count();
 
-        $aulas = ['Aula Bhinneka Tunggal Ika', 'Aula Garuda', 'Aula Akcaya'];
-        $pictures = Picture::whereIn('nama_aula', $aulas)->get()->groupBy('nama_aula');
+        $aulas = Aula::with('pictures')->whereIn('id', [1, 2, 3])->get();
+
         $details = [
             'Aula Bhinneka Tunggal Ika' => [
                 'capacity' => '100 orang',
@@ -82,19 +83,21 @@ class IndexController extends Controller
             ],
             'Aula Garuda' => [
                 'capacity' => '150 orang',
-                'price' => 'Rp 4.000.000 per hari (maks. 8 jam)',
+                'price' => 'Rp 3.000.000 per hari (maks. 8 jam)',
                 'facilities' => 'Kursi rangka stainless, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
                 'extra_cost' => 'Rp 300.000 per jam untuk setiap kelebihan waktu.',
             ],
             'Aula Akcaya' => [
                 'capacity' => '200 orang',
-                'price' => 'Rp 5.000.000 per hari (maks. 8 jam)',
+                'price' => 'Rp 2.250.000 per hari (maks. 8 jam)',
                 'facilities' => 'Kursi rangka stainless, sound system, AC, meja panggung, proyektor + layar, whiteboard.',
                 'extra_cost' => 'Rp 350.000 per jam untuk setiap kelebihan waktu.',
             ]
         ];
+    
+        // return view('guest.informasi', compact('aulas', 'details'));
 
-        return view('informasi', compact('pictures', 'details', 'aulas','totalVisitorsToday'));
+        return view('informasi', compact('details', 'aulas','totalVisitorsToday'));
         // return view ('informasi',['totalVisitorsToday'=>$totalVisitorsToday],['pictures' => $pictures],['aulas' => $aulas]);
     }
 }
