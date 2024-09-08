@@ -5,6 +5,11 @@
         </a>
     </li>
     <li>
+        <a href="{{ route('admin.pictures') }}">
+            <span> Upload Gambar Aula </span>
+        </a>
+    </li>
+    <li>
         <a href="{{ route('admin.list.booking') }}">
             <span> List Booking </span>
         </a>

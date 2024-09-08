@@ -85,7 +85,7 @@ class AdminController extends Controller
         if ($request->action == 'approve') {
             // Hapus booking jika pembatalan disetujui
             $booking->delete();
-            return redirect()->back()->with('success', 'Booking telah dibatalkan dan dihapus.');
+            return redirect()->back()->with('success', 'Booking telah dibatalkan .');
         } else {
             // Tolak permintaan pembatalan
             $booking->cancellation_requested = false;

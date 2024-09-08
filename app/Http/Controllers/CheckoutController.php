@@ -32,8 +32,11 @@ class CheckoutController extends Controller
         $booking->cancellation_reason = $request->cancellation_reason;
         $booking->save();
 
+        // Update jumlah permintaan pembatalan pada pengguna
+        $user = $booking->user;
+        $user->increment('cancellation_request_count');
 
-            // Prepare message for Telegram
+        // Prepare message for Telegram
         $start = Carbon::parse($booking->start)->format('d M Y');
         $end = Carbon::parse($booking->end)->format('d M Y');
         $days = Carbon::parse($booking->start)->diffInDays(Carbon::parse($booking->end))+1;

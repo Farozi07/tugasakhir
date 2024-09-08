@@ -102,4 +102,3 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/informasi', [IndexController::class, 'info'])->name('info');
 
 Auth::routes();
-

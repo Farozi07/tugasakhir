@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $picture->nama_aula }}</td>
-                        <td><img src="{{ asset($picture->image_path) }}" alt="{{ $picture->nama_aula }}" width="100"></td>
+                        <td><img src="{{ asset($picture->image_path) }}" alt="{{ $picture->nama_aula }}" width="250"></td>
                         <td>
                             <button class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#editModal{{ $picture->id }}">Edit</button>

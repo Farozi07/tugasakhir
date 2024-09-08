@@ -13,6 +13,7 @@
                         <th>Mulai</th>
                         <th>Berakhir</th>
                         <th>Alasan</th>
+                        <th>Jumlah Permintaan Pembatalan</th>
                         <th>Opsi</th>
                     </tr>
                 </thead>
@@ -25,6 +26,7 @@
                             <td>{{ \Carbon\Carbon::parse($p->start)->format('d M Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($p->end)->format('d M Y') }}</td>
                             <td>{{ $p->cancellation_reason }}</td>
+                            <td>{{ $p->user->cancellation_request_count }}</td>
                             <td>
                                 <form action="{{ route('admin.processCancellation', $p->id) }}" method="POST">
                                     @csrf

@@ -53,7 +53,7 @@
             <ul class="list-unstyled topnav-menu float-end mb-0 me-2">
                 <li class="dropdown notification-list" style="margin-top: 15px;">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#yearModal">
-                        Buat Arsip Sekarang
+                        Buat Arsip
                     </button>
                 </li>
             </ul>
