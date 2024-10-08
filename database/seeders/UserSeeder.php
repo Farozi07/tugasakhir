@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
         User::create([
             'role_id' => $findRole->id,
             'name' => 'admin',
-            'email' => 'BPSDM23@gmail.com',
-            'password' => bcrypt('bpsdm23'),
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('admin123'),
         ]);
     }
 }
